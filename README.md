@@ -16,7 +16,39 @@ The answer is we <b>don't want to reinvent the wheel!</b> Problems that occur fr
 Is a general solutions to common software design problems, each pattern is like a blueprint or guidelines on how to solve a particular design problem in your code.
 
 # Types Of Design Patterns
-These are 3 Types used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</a> in their seminal work on design patterns
+These are 3 categories used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</a> in their seminal work on design patterns
 - Creational Patterns
 - Structural Patterns
 - Behavioral Patterns
+
+## Creational Patterns
+Creational design patterns relate to how objects are created or constructed from classes to increase flexibility and reuse of existing code. The creational design pattern come with powerful suggestions on how best to encapsulate the object creation process in a program.
+- Singleton Pattern
+- Builder Pattern
+- Prototype Pattern
+- Factory Method Pattern
+- Abstract Factory Pattern
+
+## Structural Patterns
+Structural patterns are concerned with the composition or relationships of classes i.e. how the classes are made up or constructed or they help in answering "How to build a software component?", in other words how the entities can use each other.
+- Proxy Pattern
+- Decorator Pattern
+- Adapter Pattern
+- Facade Pattern
+- Bridge Pattern
+- Composite Pattern
+- Flyweight Pattern
+
+## Behavioral Patterns
+Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
+- Observer Pattern
+- Visitor Pattern
+- Strategy Pattern
+- Interpreter Pattern
+- Template Pattern
+- Chain of Responsibility Pattern
+- Command Pattern
+- Iterator Pattern
+- Mediator Pattern
+- Memento Pattern
+- State Pattern
