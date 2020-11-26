@@ -13,4 +13,10 @@ The answer is we <b>don't want to reinvent the wheel!</b> Problems that occur fr
 
 
 # Software Design Patterns
-Is a general solutions to common software design problems
+Is a general solutions to common software design problems, each pattern is like a blueprint or guidelines on how to solve a particular design problem in your code.
+
+# Types Of Design Patterns
+These are 3 Types used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</a> in their seminal work on design patterns
+- Creational Patterns
+- Structural Patterns
+- Behavioral Patterns
