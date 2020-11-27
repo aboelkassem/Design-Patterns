@@ -35,6 +35,7 @@ As the name suggests is <b>Only create one instance of a class,</b> There are se
 > There can only be one president of a country at a time. The same president has to be brought to action, whenever duty calls. President here is singleton.
 How do we ensure that only one object ever gets created?  The answer is to <b>make the constructor private</b> of the class we intend to define as singleton. That way, only the members of the class can access the private constructor and no one else
 * <b>Class Diagram</b>
+<img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/singleton-uml.jpg">
 
 #### Problem of using Multithreading in Singleton Pattern
 As soon as multiple threads start using the class, there's a potential that multiple objects get created, so if the code run in parallel it will create two instances seperately from the class and it's against Singleton rule.
