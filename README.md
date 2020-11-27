@@ -29,6 +29,57 @@ Creational design patterns relate to how objects are created or constructed from
 - Factory Method Pattern
 - Abstract Factory Pattern
 
+### Singleton Pattern
+As the name suggests is <b>Only create one instance of a class,</b> There are several examples where only a single instance of a class should exist. <b>Caches, App Settings, thread pools, registries, Database Context, Logging </b>are examples of objects that should only have a single instance.
+* <b>Real world example</b>
+> There can only be one president of a country at a time. The same president has to be brought to action, whenever duty calls. President here is singleton.
+How do we ensure that only one object ever gets created?  The answer is to <b>make the constructor private</b> of the class we intend to define as singleton. That way, only the members of the class can access the private constructor and no one else
+* <b>Class Diagram</b>
+
+#### Problem of using Multithreading in Singleton Pattern
+As soon as multiple threads start using the class, there's a potential that multiple objects get created, so if the code run in parallel it will create two instances seperately from the class and it's against Singleton rule.
+
+<b>There are two ways to fix this problem</b>
+- Is to add lock keyword to GetInstance() method to make sure that is object is locked until the first operation finished it's implementation
+- By double-checked locking
+<b>Example</b>
+```Csharp
+public class Counter
+    {
+        // The sole instance of the class
+        private static Counter instance = null;
+
+        public int count = 0;
+        // just for locking this object to solve multi-threading problem
+        private static object lockObj = new object();
+
+        // Make the constructor private so its only accessible to members of the class.
+        private Counter(){}
+
+        // Create a static method for object creation
+        public static Counter GetInstance()
+        {
+            // Only instantiate the object when needed, to save memory recourses
+            // Lazy Initialization
+            // Double-checked locking
+            if (instance == null)
+            {
+                lock(lockObj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new Counter();
+                    }
+                }
+            }
+
+            return instance;
+        }
+
+        public void AddOne(){count++;}
+    }
+```
+
 ## Structural Patterns
 Structural patterns are concerned with the composition or relationships of classes i.e. how the classes are made up or constructed or they help in answering "How to build a software component?", in other words how the entities can use each other.
 - Proxy Pattern
