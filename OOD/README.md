@@ -59,7 +59,7 @@ for university course search website task
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/example1-CM.png" width="300" hight="300"/>
 </p>
 
-**Technical design ⇒** take each component by technical details ****by answering the following question....how does the search page fulfill its responsibility of searching?
+**Technical design ⇒** take each component by technical details by answering the following question....how does the search page fulfill its responsibility of searching?
 
 - does the page need to talk to an external system ? or the university already has a course database component to connect Search Page Component with Course Database Component
 <p align="center" width="100%">
