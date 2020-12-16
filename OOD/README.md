@@ -65,3 +65,24 @@ for university course search website task
 <p align="center" width="100%">
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/example1-TD.png" width="300" hight="300"/>
 </p>
+
+**if the design satisfying requirements ?** some software design decisions will involve tradeoffs in different quality attributes such as **performance**, **convenience** and **security.** so it's  important to consider how quality attributes can compete in a proposed solution under different situations. Then, taking this into account and weighing it against the requirements of the product, a suitable compromise can be determined.
+
+### **Satisfying Qualities**
+
+Qualities are achieved through satisfying functional and nonfunctional requirements, which in turn are the basis for the design process.
+
+For software, there are **Functional Requirements** that describe that system or application is expected to do.  For example, if you are designing a media app, the app must be able to download and play a full length movie. So the key quality is simply **correctness** to build software design solution to meet such requirements correctly.
+
+**Non-Functional Requirements** that specify how well the system or application **does what it does**. Such requirements may describe how well the software runs in particular situations. Non-functional requirements to satisfy might include **performance, resource usage, and efficiency**; these requirements can be measured from the running software. For example the media app can have non-functional requirements to download a full length movie at a specific speed and to play such a movie within a memory limit. other qualities non-function satisfies is **reusability, flexibility, and maintainability.**
+
+After design get detailed and implementation is constructed, required qualities should be verified though techniques like **reviews** and **tests,** also **feedback from end-users.**
+
+You must satisfy qualities that matter to users as well as for it's developers, so when your software structure suits the balance of qualities desired, how structure is organized may affect the **performance** as seen by the **users,** as well as the **re-usability and maintainability** as seen by the **developers.**
+
+Below are some common trade-offs in qualities for software design:
+
+- Performance and maintainability – High performance code may be **less clear** and **less modular**, making it **harder to maintain.** Alternately, extra code for backward compatibility
+- Performance and security – Extra overhead for high security may **reduce performance**
+
+so you have to strike a **balance** during design. You should ask how much performance, maintainability, security or backward compatibility is needed.
