@@ -86,3 +86,27 @@ Below are some common trade-offs in qualities for software design:
 - Performance and security – Extra overhead for high security may **reduce performance**
 
 so you have to strike a **balance** during design. You should ask how much performance, maintainability, security or backward compatibility is needed.
+
+### Class Responsibility Collaborator (CRC)
+
+when identifying **components, connections and responsibilities** from some requirements when forming the conceptual design. CRC cards hep you to **organize your components into classes**, identifying the **responsibilities** and determine how they will **collaborate with each other.** It **record and organize and refine** the components into your software.
+
+- CRC Structure
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/crc_card.png" width="300" hight="300"/>
+</p>
+**Collaborators** are other classes that the class **interacts** with to fulfill its responsibilities. So in collaborators section you list other components that your current component connects with.
+
+**Example on ATM bank machine.**
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/crc_customer.png" width="300" hight="300"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/crc_bank.png" width="300" hight="300"/>
+</p>
+
+**CRC** help you to organize the your ideas and extract the needed objects and it's relationships. and can be used for prototyping and simulation.
+
+**For example**, you may wondering in above example, **How bank machine authenticate bank customer ?**
+
+So this add another component is **Bank** to authenticate from it. another question **how this back and bank machine communicate ?** it add another component is **Network,** also we need to **secure this network** so we will add another component is **Encryption** and so far.
+
+Also you man notice that bank machine consist of other objects like **Card Reader, Keypad, Display, Cheque Slot, Cash Dispenser.** can be written in their own cards
