@@ -275,3 +275,118 @@ public class Student
 	}
 }
 ```
+
+### Decomposition
+Decomposition is taking a **whole** thing and dividing it up into different **parts**, Or on flip side, taking a bunch of separate parts with different functionalities and **combining** them together to form a whole, Decomposition allows you to further beak down problems into pieces that are easier to understand and solve. 
+
+**The general rule** for decomposition it to look at the different responsibilities of the some **whole** thing, and evaluate how you can **separate** them into different parts each with its own responsibility.
+
+- **For example** when identifying the different parts of a **car** like transmission, motor, wheels, tires, doors, windows, seats and fuel. each of this part had a specific purpose to achieve the responsibilities of the whole.
+
+**The Nature of Parts**
+
+A whole might have a **fixed** or **dynamic** number of a certain type of part.
+
+- If there is a **fixed number** then over the lifetime of the whole object it will have exactly that much of the part object, **for example** a refrigerator have fixed number of freezers and not change over time.
+- Sometimes parts with a **dynamic number** meaning the whole object may gain new instances of those part objects objects over its lifetime, **for example** a refrigerator can have a dynamic number of food items over time, or passengers in car.
+
+Note that a **part** can also serve as a **whole**, which is made up of further **parts**. For example, a kitchen is a part of a house. But the kitchen may be made up of further parts, such as an oven and a refrigerator.
+
+**Composition** involving the lifetimes of the whole object and the part objects that are be related.
+
+- **For example** the engine typically has the same lifetime as the car - when the engine goes, so does the car! The wheels, on the other hand, are replaced many times over the course of a car's life.
+- Whole things may also contain parts that are **shared** with another whole at the same time. However, sometimes sharing a part is not possible or intended.
+
+**Composition UML Class diagram and C# Code example**
+
+There are three types of **relationships** found in decomposition that define the interaction between the whole and the parts:
+
+- Association
+- Aggregation
+- Composition
+
+**Association** is "some" relationship. This means that there is a loose relationship/no dependent between two objects. These objects may interact with each other for some time. for example, an object of a class may use services/methods provided by object of anther class like food and wine, student and sports, kitten and yarn. each of these relationships is between completely separate entities, if one object is **destroyed**, the other can **continue to exist.**
+
+The following fig shows class diagram with two objects have association relationship
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/association-ex.png" width="400" hight="400"/>
+</p>
+
+<b>0..*</b> ⇒ means a Person object is associated with **zero or more** airline objects and the same with Airline object is associated with **zero or more** person objects.
+
+```csharp
+public class Student
+{
+    public void Play(Sport sport)
+    {
+			// statements
+    }
+}
+
+public class Sport
+{
+	public string Name { get; set; }
+}
+```
+
+**Aggregation**: is a "Has-a" relationship where a **whole has parts** **that belong to it**, There may be sharing of parts amount the wholes this relationship.
+
+The "has-a" relationship from a whole to the parts is considered **weak "has-a"**. this means is although parts can belong to the wholes, they **can also exist independently** meaning they can **both exist without the other.**
+
+for example relationship between airliner and its crew, so without the crew an airliner would not be able to fly, However, the airliner does not cease if there is no crew on board, same for the crew they are part of airliner but the crew become destroyed if they are not on board their airliner. the entities have a relationship but can exist outside of it. like relationship between course section and student, pet stores and pets, bookshelf and books.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/aggreg-ex.png" width="400" hight="400"/>
+</p>
+
+```csharp
+public class Aireliner
+{
+    private List<CrewMember> Crew;
+
+    public Aireliner()
+    {
+        Crew = new List<CrewMember>();
+    }
+
+    public void AddMember(CrewMember crewMember)
+    {
+        Crew.Add(crewMember);
+        // Statements
+    }
+}
+
+public class CrewMember
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    // Statements
+}
+```
+
+**Composition:** is an exclusive containment of parts, otherwise known as a **strong "has-a"** relationship, this means is that the **whole cannot exist without its parts**, if it loses any of its parts the whole ceases to exist, if the whole destroyed then all of its parts are destroyed too. Usually you can only access the parts through its whole, Contained parts are exclusive to the whole, like the relationship between a house and a room, the human and brain.
+
+**Composition is the most dependent of the decomposition relationships,** it forms relationship that only exists as long as each object exists.
+
+The following diagram show class diagram of composition relationship, describes House object **has one or more** room objects.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/composition-ex.png" width="400" hight="400"/>
+</p>
+
+```csharp
+public class Human
+{
+    public Brain Brain { get; set; }
+    public Human()
+    {
+        Brain = new Brain();
+    }
+}
+
+public class Brain
+{
+    // statements
+}
+```
