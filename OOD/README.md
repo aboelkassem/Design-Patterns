@@ -153,3 +153,67 @@ Here is some **history of programming languages** and paradigms and the issues t
 ![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/C.png)
 ![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/Pascal.png)
 ![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/c%2B%2B_java_c%23.png)
+
+## Four Design Principles
+
+Object-oriented programming allows you to create models of how objects are represented in your system. However, to create an object-oriented program, you must examine the major design principles of such programs. Four of these major principles are: **abstraction, encapsulation, decomposition, and generalization.**
+
+### Abstraction
+
+Abstraction is one of the main ways that humans deal with complexity. It is the idea of simplifying a concept in the problem domain to its essentials within some **context**. Abstraction allows you to better understand a concept by breaking it down into a simplified description that **ignores unimportant details.** Also an abstraction for a concept should **make sense** for the concept's purpose. This idea applies **the Rule Of Least Astonishment**
+
+**Rule Of Least Astonishment:** is the abstraction captures the essential attributes and behavior for a concept with **no surprises and no definitions** that fall beyond its scope. You don't want to surprise anyone trying to understand your abstraction with **irrelevant characteristics**.
+
+It's up to you to choose the abstraction that is most appropriate for your purpose depending the context of your app.
+
+**For example** the context is an academic setting, so abstraction for a student will be the essential characteristics/attributes of him:
+
+- The courses they are currently taking
+- Their grades in each course
+- The Student ID number
+
+Another examples for defining attributes of a cat from the context of a cat owner
+
+- A cat will have basic attributes like name, color, favorite Nap location, microchip number
+
+Also abstraction should describe a base **behaviors**, Like for **student** would be Studying, doing assignments, attending lectures which are responsibilities that student abstraction does for it's purpose. 
+
+**Example** of abstraction of lion
+
+- attributes like age, beard, size and it's color
+- behaviors like hunting, eating and sleeping
+
+In abstraction anything other than a concept's essential **attributes and behaviors** is irrelevant focusing the context and purpose of this object into our app to simplifying your class design so the are more focused and understandable to someone else viewing them.
+
+**Abstraction UML Class diagram and C# Code**
+
+Thinking of how we abstract **Food** object in CRC and Class diagram
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/association-ex.png" width="300" hight="300"/>
+</p>
+
+Class diagram contains
+
+- Class Name which is **Food**
+- Properties which define C# Members ⇒ [variable name]:[variable type]
+- Operations which define C# Methods ⇒ name( [parameter list] ): [return type]
+
+Class diagram are very close to implementation which making the translation to code very easy
+
+So the following code is implemented of above class diagram
+
+```csharp
+public class Food
+{
+	public string GroceryId{ get; set; }
+	public string Name{ get; set; }
+	public string Manufacturer{ get; set; }
+	public Date ExpiryDate{ get; set; }
+	public double Price{ get; set; }
+
+	public bool IsOnSale(){
+
+	}
+}
+```
