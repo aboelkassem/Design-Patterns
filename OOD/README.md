@@ -390,3 +390,135 @@ public class Brain
     // statements
 }
 ```
+
+### Generalization
+
+Generalization helps reduce redundancy when solving problems.
+
+When model behaviors using **methods** to eliminates the need to have identical code written throughout a program. like generalize repetitious code that we would need to write by making a separate method and calling it for examples
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/generlize-exp-1.png" width="300" hight="500"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/generlize-exp-2.png" width="300" hight="300"/>
+</p>
+
+**Generalization** is used when design algorithms, which are meant to be used to perform the same action on different sets of data, we generalize the actions into its own methods and simply pass the data through arguments.
+
+**Generalization** also applied on class through **Inheritance,** so we take **repeated, common and shared characteristics** between two or more classes.
+
+**Inheritance and Methods** exemplify the generalization design principle, that following technique called **Don't Repeat Yourself (D.R.Y)** which mean write programs that are capable of performing the same tasks but with less code to be more reusable and easy to maintain.
+
+**Generalization UML Class diagram and C# Code example**
+
+following figures shows how diagram inheritance in UML diagram and example 
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/generalization-ex1.png" width="300" hight="300"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/generalization-ex2.png" width="300" hight="300"/>
+</p>
+
+```csharp
+public abstract class Animal
+{
+    protected int numberOfLegs;
+    protected int numberOfTails;
+    protected string name;
+
+    public Animal(string petName, int legs, int tails)
+    {
+        this.name = petName;
+        this.numberOfLegs = legs;
+        this.numberOfTails = tails;
+    }
+
+    public virtual void walk() { /* statements */ } // to be overrided
+    public void run() { /* statements */ }
+    public void eat() { /* statements */ }
+}
+
+public class Dog: Animal
+{
+    public Dog(string name, int legs, int tails): base(name, legs, tails)
+    { }
+
+    public void playFetch() { /* statements */ }
+
+		// you also can override a method in super class
+		public override void walk() { /* statements */ }
+}
+```
+
+**Multi-Inheritance**
+
+Super class can have many sub classes, subclass can have only inherit from one superclass.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/multi-inher-ex.png" width="300" hight="300"/>
+</p>
+
+```csharp
+public class Dog: Animal
+{
+    public Dog(string name, int legs, int tails): base(name, legs, tails)
+    { }
+
+    public void playFetch() { /* statements */ }
+}
+
+public class Cat: Animal
+{
+    public Cat(string name, int legs, int tails): base(name, legs, tails)
+    { }
+
+    public void playWithYarn() { /* statements */ }
+}
+```
+
+**Generalization with Interfaces in C# and UML**
+
+Interface is like a contract to be fulfilled by implementing classes, used to only describe behaviors.
+
+- Interface like abstract classes which cannot be instantiated, which mean you can implement **polymorphism** meaning ****when two classes have the same description of behavior but implementation may be different
+- Interface can inherit from other interfaces
+- Interface inheritance should be abused, this mean you should not be extending interfaces if you trying to create larger interface
+- C# and java does not support multi-inheritance classes because this cause **Data Ambiguity** meaning when subclass inherits from two or more with have the attributes with the same name or methods signature, how do we distinguish between them?
+- So Class can implement as many interfaces as we want
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/interface-ex1.png" width="300" hight="300"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/interface-ex2.png" width="300" hight="300"/>
+</p>
+
+```csharp
+interface IAnimal
+{
+    public void move(); 
+    public void speak(); 
+    public void eat(); 
+}
+
+class Dog :IAnimal
+{
+    public void eat() { /* statements */}
+
+    public void move() { /* statements */}
+
+    public void speak() { Console.WriteLine("Bark!"); }
+}
+
+class Cat : IAnimal
+{
+    public void eat(){ /* statements */}
+
+    public void move(){ /* statements */}
+
+    public void speak() { Console.WriteLine("Meow!"); }
+}
+```
+
+- Classes can implement on or more interface at time, which allows them to have multiple types.
+- Interfaces enable you to describe behaviors without the need to implement them, which allows you to reuse these abstractions.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/class-vs-interface.png" width="400" hight="400"/>
+</p>
