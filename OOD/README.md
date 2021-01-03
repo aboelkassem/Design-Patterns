@@ -110,3 +110,46 @@ when identifying **components, connections and responsibilities** from some requ
 So this add another component is **Bank** to authenticate from it. another question **how this back and bank machine communicate ?** it add another component is **Network,** also we need to **secure this network** so we will add another component is **Encryption** and so far.
 
 Also you man notice that bank machine consist of other objects like **Card Reader, Keypad, Display, Cheque Slot, Cash Dispenser.** can be written in their own cards
+
+# Object-Oriented Modeling
+
+One approach to help make the design process easier is the object-oriented approach. This allows for the description of concepts in the problem and solution spaces as **objects**. objects are a notion that can be understood by both users and developers, because **object-oriented thinking** applies to many fields. This shared knowledge makes it possible for users and developers to discuss elements of complex problems. 
+
+Even here, you don't go straight from the problem to writing the code, you have to do **Conceptual Design involving Object-Oriented Analysis** to identify the key objects in the problem. also **Technical Design involving Object-Oriented Design** to further refine the details of the objects including their attributes and behaviors.
+
+The goal during Software Design is to construct and refine **models** of all the objects, these models are useful throughout the design process.
+
+- **Entity** where initial focus during the design is placed in the problem space.
+- **Control** objects that receive events and actions.
+- **Boundary** that connect services outside your system.
+
+The Models are expressed  in a visual notation, called **Unified Modelling Language (UML).**
+## Evolution of Programming Languages
+
+Programming languages evolved in similar fashion as **traditional languages**, each new programming language was developed to provide **solutions** to problems that previous languages were unable to adequately address. The ideas used in computer languages have caused a shift in **programming paradigms.**
+
+In 1980s, Object-Oriented Design that are central of object-oriented programming became popular.
+
+**The goal of object-oriented design is to:**
+
+- Make an abstract data type easier write.
+- Structure a system around abstract data types called **classes**
+- Introduce the ability for an abstract data type to extend another by introducing a concept called **inheritance**
+
+The advantages of using programming paradigms like OOP is that the system will mimic the structure of the problem meaning that any object-oriented program is capable of representing **real world objects** or ideas with more fidelity that allows developers to compartmentalize the data and how it can be manipulated in their own separate classes.
+
+So **Object-Oriented Programming** is the **predominate programming paradigm.**
+
+Most modern programming languages like Java, C++, C# are founded based on objects.
+
+**Why this history ?**
+
+as a developer you need to have a broad **understanding of what is out there in the industry today,** There are many systems that still use the older languages and design paradigms.
+
+Also Object-oriented programming is a powerful tool, but is not only in your toolbox. Object-oriented design is not always the best approach for every thing because the design may not fit the problem, Remember to be efficient with your time event if this means taking a non-object-oriented approach.
+
+Here is some **history of programming languages** and paradigms and the issues they met.
+![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/COBOL-Fortran.png)
+![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/C.png)
+![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/Pascal.png)
+![](https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/c%2B%2B_java_c%23.png)
