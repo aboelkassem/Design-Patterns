@@ -217,3 +217,61 @@ public class Food
 	}
 }
 ```
+
+### Encapsulation
+
+Encapsulation is a fundamental design principle in object oriented modeling and programming, Encapsulation forms a self-contained object by **bundling** the **data and functions** it requires to work, **expose an interface** whereby other objects can access and use it , **restricts access** to certain inside details. It keeps software modular, easier to work with and easy to manage.
+
+So after **Abstraction** that determine the attributes and behaviors that are relevant about concept in some context ⇒ **Encapsulation** ensures that these characteristics are bundled together in the same class
+
+- **For example** Student object should "**knows**" relevant data like degree program, Course object would "**know**" a list of students taking it, Professor object would "**know**" a list of courses teaches.
+
+Also the methods manipulate the attribute values in object to achieve the actual behaviors, by **Exposing** some methods to be accessible to objects, and **restricts** other.
+
+- **For example** Course can provide a method to allow a student to enroll in the course or Course allow professor to see the students in that course.
+
+**Encapsulation helps with data integrity** so you can define methods and attributes of class to be **restricted** from outside to access except through specific methods. 
+
+**Encapsulation can secure sensitive information** for example, allowing a Student class to store a degree program and GPA without reveals it's actual value so it has a method tells whether the student is in good standing for the degree program or not.
+
+**Encapsulation helps with software changes** so the accessible interface of class will remain the same, while implementation of attributes and methods can change.
+
+- **For example** Professor need to know student GPA, student have many ways to calculate his GPA like entering Student Information system or go to administrator to get. So Professor don't care how the student will get from.
+
+In programming, this thinking called **Black Box** Thinking, you think of a class like a black box that you cannot see details inside of how attributes are represented or how methods compute the result, you just provide inputs and obtain outputs by calling methods so it doesn't matter what happens in the box to achieve the expected behaviors.
+
+**Encapsulation** achieves **Abstraction Barrier** since the internal workings are not relevant to outside world to **reduces complexity** for the users of a class and **increases reusability** because another class only need to know the right method to call to get desired behavior. 
+
+**Encapsulation UML Class diagram and C# Code Example** 
+
+There are two different kinds of methods typically used to preserve data integrity. These are:
+
+- **Getter Methods** are methods that retrieve data, and their names typically begin with get and end with the name of the attribute whose value you will be returning.
+- **Setter Methods** change data, and their name typically begin with set and end with the name of the variable you wish to set. Also Setters are used to **set private attribute** in a safe way.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/encap-ex.png" width="400" hight="400"/>
+</p>
+
+```csharp
+public class Student
+{
+	private float gpa;
+	private string degreeProgram;
+
+	public float getGPA(){
+		return gpa;
+	}
+	public void setGPA(float newGPA){
+		gpa = newGPA;
+	}
+	public string getDegreeProgram(){
+		return DegreeProgram;
+	}
+	public void setDegreeProgram(string newDegreeProgram){
+		if (gpa > 2.7){
+			degreeProgram = newDegreeProgram;
+		}
+	}
+}
+```
