@@ -1,5 +1,6 @@
 ﻿using DesignPatterns.Creational.Singleton;
 using System;
+using System.Collections.Generic;
 
 namespace DesignPattern
 {
