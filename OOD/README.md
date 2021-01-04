@@ -522,3 +522,189 @@ class Cat : IAnimal
 <p align="center" width="100%">
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/class-vs-interface.png" width="400" hight="400"/>
 </p>
+
+### Evaluating Design Complexity
+
+It is important to keep modules simple when you are programming,  If your design complexity which exceeds what developers can mentally handle, then bugs will occur more often.
+
+To help control this we use **Module**
+
+- Design complexity applies on both classes and methods so we use term called **Module** to refer to program unit containing classes and methods within them.
+- **Coupling** focuses on complexity between a module and other modules.
+- **Cohesion** focuses on complexity within a module.
+
+## Coupling and Cohesion
+
+this two concepts help to better apply of OOD principles and achieve more manageable system, A system is a combination of various modules. If the system has a **bad design,** then modules can **only** connect to other **specific** modules and **nothing else.** A **good design** allows **any** modules to connect together **without much trouble**. In other words, in a good design, modules are **compatible** with one another and can therefore be easily **connected and re-used**
+
+### **Coupling**
+
+**Coupling** for a module captures the complexity of connecting the module to other modules
+
+- If your module **is highly reliant** on other modules, say this module is **tightly coupled** to others
+- If your module finds **easy to connect** to other modules, say this module is **loosely coupled** to others, So it's important for you module to be **loose** or low not tight.
+
+When evaluating the Coupling of module you need to consider metrics **degree**, **ease**, and **flexibility**
+
+- **Degree** is the number of **connections** between the module and others. With coupling, you want to keep the degree **small**, For instance if the module needed to connect to other modules through a **few parameters or narrow interfaces,** then the degree would be small and coupling would be loose.
+- **Ease** is **how obvious** are the connections between the module and others. With coupling, you want the connections to **be easy to make** without needing to understand the implementations of the other modules.
+- **Flexibility** is how interchangeable the other modules are for this module. With coupling, you want the other modules **easily replaceable** **for something better** in the future.
+
+### Cohesion
+
+Cohesion represents the clarity of the responsibilities of a module.
+
+- If your module performs **one task and nothing else** or has a clear purpose, you module has **high cohesion**
+- If you module tries to encapsulate **more than one purpose** or has an unclear purpose, you module has **low cohesion**.
+
+A bad design has low cohesion, if a module has more than one responsibility, it is a good idea to **split** the module.
+
+**For example** suppose you have class called **Sensor** that has **two purposes,** getting humidity and get temperature
+
+```csharp
+class Sensore
+{
+    public float Humidity { get; set; }
+    public float Temperature { get; set; }
+
+    public float get(int controlFlag)
+    {
+        switch (controlFlag)
+        {
+            case 0:
+                return this.Humidity;
+                break;
+            case 1:
+                return this.Temperature;
+                break;
+            default:
+                throw new Exception("Unknown Control Flag");
+        }
+    }
+}
+```
+
+Since the sensor class doesn't have a clear single purpose so it have **Low Cohesion**
+
+Since it's unclear what controlFlag means until to read inside the method itself in order to know what values to give it which lacks ease to make the get method harder to use which call **Tightly Coupled**
+
+To make it **loosely coupled and high cohesion** follow new design which split it to two classes each one has one purpose, and not hiding any information we don't need to break encapsulation to look inside the method
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/couped-ex.png" width="400" hight="400"/>
+</p>
+
+It is important to balance between **low coupling and high cohesion** in system design. Both are necessary for a good design.
+
+For complex system can be distributed between the modules or within the modules
+
+- As modules are simplified to achieve **high cohesion**, they may need to depend more on other modules thus **increase coupling.**
+- As connections between modules are simplified to achieve **low coupling**, they may to need to take more responsibilities thus **lowering cohesion**
+
+### **Separation of Concerns**
+
+Is an ongoing process throughout the design process.
+
+**Concern** is a very general notion, basically it is anything that matters in providing a solution to a problem, Which is a key idea that applies throughout object oriented modelling and programming.
+
+Consider a software system that solves a problem. That problem could either be simple, with a small number of subproblems, or complex, with a large number of subproblems. Concepts can be abstracted from the problem space. When these abstractions are implemented in the software, it can lead to more concerns
+
+How these abstractions are implemented in the software can lead to more concerns? Some of these concerns may involve:
+
+- What information the implementation represents
+- What it manipulates
+- What gets presented at the end
+
+Importance of separation of concerns:
+
+- They allow you to develop and update sections of the software independently.
+- Using separation of concerns also means that you do not need to know how all sections of code work in order to update a section.
+- It allows changes to be made to one component without requiring a change in another.
+
+The concerns that matter are addressed separately when applying the design principles of **abstraction, encapsulation, decomposition, and generalization**
+
+⇒ each concept in the problem space leads to separate **abstraction** with its own relevant attributes and behaviors, these attribute and behaviors are **encapsulated** into their own section of code called class, The view of a class by the rest of the system and its implementation are separated, so that the details of implementation can change while the view through an interface can stay the same, A whole class can also be **decomposed** into multiple classes, we may recognize commonalities among classes which are then separated and **generalized** into a super class.
+
+**For example The Smartphone** which focus on two functionality of using camera and make calls
+
+```csharp
+public class SmartPhone
+{
+    private byte camera;
+    private byte phone;
+
+    public SmartPhone() { … }
+
+    public void takePhoto() { … }
+    public void savePhoto() { … }
+    public void cameraFlash() { … }
+
+    public void makePhoneCall() { … }
+    public void encryptOutgoingSound() { … }
+    public void decipherIncomingSound() { … }
+}
+```
+
+This code is **low cohesion** in SmartPhone class, because we have behaviors that are not related to each other, the camera behaviors don't need to be encapsulated with the behaviors of the phone for the camera to do its job, In addition don't offer any **modularity**, We cannot access the camera or the phone separately if we were to build another system that required only one, and we cannot replace our current camera with a different camera/different object.
+
+So to make this class more cohesive and give each component distinctive functionalities!
+
+Just check what our class is concerned about and separate them out, for example SmartPhone has two concerns
+
+- Act as a tradition phone
+- Be able to use the built-in camera to take pictures
+
+So after applied separation of concerns
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/seperation-of-concerns.png" width="400" hight="400"/>
+</p>
+
+```csharp
+public interface ICamera 
+{
+	public void takePhoto();
+	public void savePhoto();
+	public void cameraFlash();
+}
+
+public interface IPhone
+{
+    public void makePhoneCall();
+    public void encryptOutgoingSound();
+    public void deciphereIncomingSound();
+}
+public class FirstGenCamera: ICamera
+{
+    /* Abstracted camera attributes */
+}
+public class TraditionalPhone : IPhone
+{
+    /* Abstracted phone attributes */
+}
+
+public class SmartPhone
+{
+    private ICamera myCamera;
+    private IPhone myPhone;
+
+    public SmartPhone(ICamera aCamera, IPhone aPhone)
+    {
+        this.myCamera = aCamera;
+        this.myPhone = aPhone;
+    }
+
+    public void useCamera()
+    {
+        this.myCamera.takePhoto();
+    }
+    public void usePhone()
+    {
+        this.myPhone.makePhoneCall();
+    }
+}
+```
+
+So now if we want change or swap out the camera or phone classes for something else, we don't need to touch any of the SmartPhone class's code, we just change the code to it's parts.
+
+We used separation of concerns throughout this example by separating out the general notions of camera and phone through applying **generalization** and defining two interfaces, separating out the functionality for a FirstGenCamera and TraditionalPhone by applying **abstraction** and **encapsulation**, finally by applying **decomposition** to the smartphone so the parts are separated from the whole. by applying this the code will be organized so that it only contains the code that needs it do its job
