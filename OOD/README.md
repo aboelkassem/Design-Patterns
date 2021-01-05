@@ -708,3 +708,65 @@ public class SmartPhone
 So now if we want change or swap out the camera or phone classes for something else, we don't need to touch any of the SmartPhone class's code, we just change the code to it's parts.
 
 We used separation of concerns throughout this example by separating out the general notions of camera and phone through applying **generalization** and defining two interfaces, separating out the functionality for a FirstGenCamera and TraditionalPhone by applying **abstraction** and **encapsulation**, finally by applying **decomposition** to the smartphone so the parts are separated from the whole. by applying this the code will be organized so that it only contains the code that needs it do its job
+
+## Information Hiding
+
+One important thing is How to address information access? You don't need everything in your system to know about everything else. The Module should only have access to the information that it needs to do its job, we do this by applying **information hiding**
+
+Information hiding allows modules of our system to give others the minimum amount of information needed to use them correctly and "hide" everything else. which enable developer working on a module separately without other developers needing to know the implementation details. They can use it through interface.
+
+In general things that might change like **implementation details,** should be **hidden**. And things that should not change like **assumptions** are revealed through **interfaces.**
+
+**Information Hiding Through Encapsulation:** we use encapsulation to bundle attributes and behaviors into their appropriate class, and expose an interface to provide access. which allows:
+
+- Hide implementation of behaviors and only access through an interface of specific methods, So other classes rely on the information in these method signatures not the implementation
+- Change the implementation without changing the expected outcome
+
+So you can hide information through the use of **Access Modifiers** which C# have 4 different levels of access **Public**, **Protected**, **Private**, and **Internal**
+
+- **Attributes** with a **public** access modifier are accessible by **any class** in your system which mean other classes can retrieve and modify the attribute. **Public Methods** are also accessible by any class in your system, but does not allow other classes to **change the implementation** of the behavior for the method, just other classes call the method and receive any output.
+- **Protected** Methods and Attributes are not accessible to every class in the system, the are only available to the encapsulating **class itself, all subclasses, and within the same package/namespace**
+- **Internal** Modifier The code is only accessible within its own assembly, but not from another assembly
+- **Private** Attributes and methods are **not accessible** by any class other than by the **encapsulating class itself,** This mean these attributes cannot be accessed directly and these methods cannot be invoked by another classes.
+
+### Conceptual Integrity
+
+It about creating consistent software, making decision about how your system will be designed and implemented, so if you see multiple people working on software it would seem as only on mind guiding all the work.
+
+**Conceptual integrity** does not mean that the developers in your team don't get to voice their opinions about the software, It's more about **everyone agreeing** to use certain design principles and conventions.
+
+You can achieve Conceptual integrity through:
+
+- **Communication** through adopting agile development practices like **Daily Stand-Up Meetings** and **sprint retrospectives** where team members agree to use certain libraries or methods when addressing certain issues, For example team members can all follow a particular **naming convention**
+- **Code Reviews** which are systematic examinations of written code like peer review in writing, which used to **find mistakes** in the software and keep different developers consistent with each other, Developers go through code line by line and uncover issues in each other’s code.
+- Using **Design Principles** and **Design Patterns**
+- Having a **well-defined design or architecture** underlying the software, While software design is  associated with guiding internal design of process running as a single process, Software Architectures describe how software running as multiple processes work together which creates organized software consistency.
+- **Unifying concepts** is taking different concepts and finding a commonality, For example in the Unix OS every resource can be seen and manipulated as file, the same set of operations can be used on different types of resources.
+- Having a **small group** that accepts commits to the code base, which similar to code reviews but restricts the reviews to only members of your software team to ensure the software changes follow the overall architecture and design of the software to solve any design issues and lead to consistency.
+
+### Inheritance Issues
+
+Inheritance is a powerful design tool that can help you create clean, reusable and maintainable software systems. But **misusing** inheritance can lead to **poor code** and that happen when creating **more problems** than they are meant to solve. 
+
+To know that you:
+
+- Ask yourself: "Am I using inheritance to simply share attributes or behaviors without further adding anything **special in my subclasses**?"
+- If the **Liskov Substitution Principle** are broken, which this principle states that a subclass can replace a superclass, if and only if the subclass does not change the functionality of superclass.
+
+Example for bad inheritance in java, In Stack data structure, the Java Stack class inherits from a Vector superclass. This means that the Stack class is able to return an element at a specified index, retrieve the index of an element, and even insert an element into a specific index. These are not behaviors normally expected from a stack.
+
+**If inheritance does not suit your need**, Just using **decomposition** will be more appropriate.
+
+For SmartPhone Example
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/smartphone-ex1.png" width="300" hight="300"/>
+</p>
+
+which are not make sense for SmartPhone to inherit from the phone and then add camera methods to it. So in this case we should use decomposition to extract out the camera responsibilities and put it into their own class like this:
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/smartphone-ex2.png" width="400" hight="400"/>
+</p>
+
+Inheritance could be a difficult design principle to apply, but still a very powerful technique.
