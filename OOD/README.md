@@ -770,3 +770,64 @@ which are not make sense for SmartPhone to inherit from the phone and then add c
 </p>
 
 Inheritance could be a difficult design principle to apply, but still a very powerful technique.
+
+### UML Sequence Diagrams
+
+Sequence diagram are used to show your team how **objects** in your program **interact** with each other to complete tasks. Thing it as mapping of conversation from two people/objects, it used as a planning tool before the dev team start coding to help determining the functions you will need.
+
+**For example** a person wants to order a burger at local fast food restaurant,
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/UMLSequence-ex1.png" width="700" hight="700"/>
+</p>
+
+**Components of Sequence Diagram**
+
+- **Boxes** are used to represent a role played by an object. The **role** is typically named after the class for the object
+- **Vertical dotted lines** known as **lifelines** to represent an object as time passes by.
+- **Solid line Arrows** to show **messages** that are sent from one object to another. A short description of the message is usually included above the arrow
+- **Dotted line arrows** are used to show a return of data and control back to initiating objects.
+- **Small rectangles** along an object’s lifeline denote a **method activation**. You activate an object whenever an object sends, receives, or is waiting for a message.
+
+Sequence diagrams are typically framed within a large box which show that this is **one** sequence of activities, Also Sequence diagram can contain **other sequence diagrams** within it
+
+**For example** in changing the channel of TV by using remote control.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/UMLSequence-ex2.png" width="700" hight="700"/>
+</p>
+
+When sequence diagrams get more complicated, you can also show **Loops** and **Alternative** processes in sequence diagram, for above example when Viewer is unsure what channel to go to. and would like to surf the channels until find a channel they like 
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/UMLSequence-ex3.png" width="700" hight="700"/>
+</p>
+
+### UML State Diagram
+
+**A State Diagram** is a technique that you can use to describe how your system behaves and responds. When an event occurs you note how a system acts or behaves and show changes between states to determine the different events that might occur during object's lifetime like user inputs, and how this object behave when this event occurs like checking conditions and performing actions.
+
+**State diagrams** can describe a single object and illustrate how that object behaves in response to a series of events in your system by imaging the changing states of object. Also help finding an issues in your system like discovering a condition that didn't play for or help to create tests.
+
+**State** is the way an object exists at particular point in time, The state of an object is determined by the values of its attributes.
+
+**For example** Car with automatic transmission can have different states like park, reverse, neutral, and drive. When a car is in reverse it can only behave move backwards, if you want it to move a forwards direction you have to change the state of car.
+
+UML State Diagram components
+
+- **Filled circle** to indicate the **start state** of diagram.
+- **Arrows** are used to represent **events** to **transition** from one state to another
+- **Rounded rectangles** indicate other states which have three sections a **state name**, **state variables**, and **activities**
+    - **State name** is the name of the state, it should be meaningful for the states of your object
+    - **State Variables** are data relevant to the state of the object
+    - **Activities** are actions that are performed in the state, There are three types for each state, **entry, exit and do**
+        - **Entry** activities are actions that occur when the state is **just entered** from another state
+        - **Exit** activities are actions that occur when the state **is exited** and moves on to another.
+        - **Do** activities are actions that occur **once, or multiple times**
+- **Termination** represents an object being **destroyed** or the process being **completed**
+
+**Example** of Vending machine 
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/UMLState-ex.png" width="700" hight="700"/>
+</p>
