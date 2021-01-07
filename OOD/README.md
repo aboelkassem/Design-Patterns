@@ -831,3 +831,25 @@ UML State Diagram components
 <p align="center" width="100%">
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/UMLState-ex.png" width="700" hight="700"/>
 </p>
+
+### Model Checking
+
+After using many techniques to design your system, **How do you make sure that the system you've created is correct**? you can run **tests** and see if the actual behavior matches what you expect, another technique is **model checking**
+
+**Model checking** is a systematic **check** of your system's state model, you **check all the states** of your software and find that there are any **errors** by simulating different events that change the states and variables of your software. And notifies you of any violations of the rules.
+
+Model checks are performed by **model checking software**. There are different types of software available for such **tests**, some of which are free and available for developers using different languages. Model checking is typically performed during **testing** of the software
+
+Think of model checking like going through airport security, Security guards in airports know the rules of what people should have or shouldn't have to get on an airplane.
+
+Imagine software that has a rule not to produce a **deadlock, Deadlock** is a situation where your system **cannot continue** because **two tasks are waiting for the same resource.** So your **model checker** would simulate the different states that could occur in your system and if **deadlock** is possible, it would provide you details of the violation.
+
+**How do you model check your software** ? Model checkers generate a **State Model** from your code, A state model is an abstract state machine that can be in one of various states, the model checker then checks the state of model conforms to behavioral properties. For example, the model checker can examine the state model for flaws like **race conditions**, exploring all the possible states of your model.
+
+The three different phases to performing model checking :
+
+- **The Modeling phase**: where you enter **model description** in whatever programming language your system uses, describe the desired properties.
+- **The Running phase:** this is when you **run the model checker** to see how your model confirms to the desired properties that you've wrote in the modeling phase.
+- **The Analysis phase**: this is when you **check** if all the desired properties are satisfied and if any are violated (Counterexamples), proving information to you where to fix any problems.
+
+Model checking helps ensure not only that software is well designed, but also that software meets desired properties and behavior, and it works as intended. There are also many ways to test your system's behaviors like **unit testing**, beta testing and simulations
