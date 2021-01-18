@@ -1,5 +1,6 @@
-## Suggestions for Object Orientated Design
-Whenever writing code in an object orientated language, sticking to the following list of suggestions will make your code amenable to changes with the least effort.
+### Suggestions for [Object Oriented Design](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)
+Whenever writing code in an object orientated language, sticking to the following list of suggestions will make your code amenable to changes with the least effort. You can learn Object-Oriented Design and Analysis from this **[Link](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)**
+
 * <b>Separate</b> out parts of code that vary or change from those that remain the same.
 * Always code to <b>an interface</b> and not against a concrete implementation.
 * <b>Encapsulate</b> behaviors as much as possible.
@@ -13,7 +14,10 @@ The answer is we <b>don't want to reinvent the wheel!</b> Problems that occur fr
 
 
 # Software Design Patterns
-Is a general solutions to common software design problems, each pattern is like a blueprint or guidelines on how to solve a particular design problem in your code.
+It is a **general solutions** to common software design **problems**, each pattern is like a blueprint or guidelines on how to solve a particular design problem in your code.
+**Design patterns** are a bit more conceptual, It is **knowledge** that you can apply within your software design to guide its structure, and make it flexible and reusable.
+**Design patterns** help to create a **design vocabulary,** rather than having to explain the details of design solution over and over again to someone, you just use a suggestive word to describe it which making easier for developers to communicate
+You choose your **pattern** based on the **problem space**
 
 # Types Of Design Patterns
 These are 3 categories used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</a> in their seminal work on design patterns
@@ -33,7 +37,9 @@ Creational design patterns relate to how objects are created or constructed from
 As the name suggests is <b>Only create one instance of a class,</b> There are several examples where only a single instance of a class should exist. <b>Caches, App Settings, thread pools, registries, Database Context, Logging </b>are examples of objects that should only have a single instance.
 * <b>Real world example</b>
 > There can only be one president of a country at a time. The same president has to be brought to action, whenever duty calls. President here is singleton.
-How do we ensure that only one object ever gets created?  The answer is to <b>make the constructor private</b> of the class we intend to define as singleton. That way, only the members of the class can access the private constructor and no one else
+How do we ensure that only one object ever gets created?  The answer is to <b>make the constructor private (lazy construction)</b> of the class we intend to define as singleton. That way, only the members of the class can access the private constructor and no one else
+**lazy creation** means that the object is not created until it is truly **needed**. This is helpful, especially if the object is large. As the object is not created until the “getInstance” method is called, the program is more efficient.
+
 * <b>Class Diagram</b>
 <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/singleton-uml.jpg">
 
@@ -43,42 +49,81 @@ As soon as multiple threads start using the class, there's a potential that mult
 <b>There are two ways to fix this problem</b>
 - Is to add lock keyword to GetInstance() method to make sure that is object is locked until the first operation finished it's implementation
 - By double-checked locking
-<b>Example</b>
-```Csharp
-public class Counter
+
+**Example 1**
+```csharp
+class AppSettings
+{
+    // the class variable is null if no instance is instantiated
+    private static AppSettings Instance = null;
+    private AppSettings() {}
+
+    public static AppSettings GetInstance()
     {
-        // The sole instance of the class
-        private static Counter instance = null;
-
-        public int count = 0;
-        // just for locking this object to solve multi-threading problem
-        private static object lockObj = new object();
-
-        // Make the constructor private so its only accessible to members of the class.
-        private Counter(){}
-
-        // Create a static method for object creation
-        public static Counter GetInstance()
+        if (Instance == null)
         {
-            // Only instantiate the object when needed, to save memory recourses
-            // Lazy Initialization
-            // Double-checked locking
-            if (instance == null)
+            Instance = new AppSettings();
+        }
+        return Instance;
+    }
+}
+```
+
+**Example 2**
+```csharp
+public class Counter
+{
+    // The sole instance of the class
+    // the class variable is null if no instance is instantiated    
+		private static Counter instance = null;
+    public int count = 0;
+    // just for locking this object to solve multi-threading problem
+    private static object lockObj = new object();
+
+    // Make the constructor private so its only accessible to members of the class.
+    private Counter(){}
+
+    // Create a static method for object creation
+    public static Counter GetInstance()
+    {
+        // Only instantiate the object when needed, to save memory recourses
+        // Lazy Initialization
+        // Double-checked locking
+        if (instance == null)
+        {
+            lock(lockObj)
             {
-                lock(lockObj)
+                if (instance == null)
                 {
-                    if (instance == null)
-                    {
-                        instance = new Counter();
-                    }
+                    instance = new Counter();
                 }
             }
-
-            return instance;
         }
 
-        public void AddOne(){count++;}
+        return instance;
     }
+
+    public void AddOne(){count++;}
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Counter counter1 = Counter.GetInstance();
+        Counter counter2 = Counter.GetInstance();
+        counter1.AddOne();
+        counter2.AddOne();
+
+        Console.WriteLine("counter 1:" + counter1.count.ToString());
+        Console.WriteLine("counter 2:" + counter2.count.ToString());
+        Console.WriteLine();
+
+        counter1.AddOne();
+        Console.WriteLine("counter 1:" + counter1.count.ToString());
+        Console.WriteLine("counter 2:" + counter2.count.ToString());
+    }
+}
 ```
 
 ## Structural Patterns
