@@ -248,7 +248,7 @@ Define an **interface** for creating an object, but let subclasses decide which 
 
 ```csharp
 public abstract class KnifeStore {
-	public Knife orderKnife(String knifeType) {
+	public Knife orderKnife(string knifeType) {
 		Knife knife;
 		// now creating a knife is a method in the
 		class knife = createKnife(knifeType);
@@ -259,7 +259,7 @@ public abstract class KnifeStore {
 
 		return knife;
 	}
-	abstract Knife createKnife(String type);
+	abstract Knife createKnife(string type);
 }
 ```
 
@@ -268,10 +268,10 @@ in above example, Now When a subclass is defined, it “must” define this **cr
 ```csharp
 public BudgetKnifeStore: KnifeStore {
 	//up to any subclass of KnifeStore to define this method
-	Knife createKnife(String knifeTYpe) {
-		if (knifeType.equals(“steak”)) {
+	Knife createKnife(string knifeTYpe) {
+		if (knifeType.Equals("steak")) {
 			return new BudgetSteakKnife();
-		} else if (knifeType.equals(“chefs”)) {
+		} else if (knifeType.Equals("chefs")) {
 			return new BudgetChefsKnife();
 		}
 		//.. more types
