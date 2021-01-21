@@ -1,6 +1,8 @@
 ﻿using DesignPatterns.Creational.FactoryMethod;
 using DesignPatterns.Creational.Singleton;
+using DesignPatterns.Structural.FacadePattern;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace DesignPattern
@@ -26,15 +28,30 @@ namespace DesignPattern
 
             #region FactoryMethodPattern
 
-            Console.WriteLine("Enter your card number");
-            var cardNumber = Console.ReadLine();
-            var bankCard = cardNumber.Substring(0, 6);
+            //Console.WriteLine("Enter your card number");
+            //var cardNumber = Console.ReadLine();
+            //var bankCard = cardNumber.Substring(0, 6);
 
-            // Create bank object from the factory
-            BankFactory bankFactory = new BankFactory();
-            IBank bank = bankFactory.CreateBank(bankCard);
+            //// Create bank object from the factory
+            //BankFactory bankFactory = new BankFactory();
+            //IBank bank = bankFactory.CreateBank(bankCard);
 
-            Console.WriteLine(bank.Withdraw());
+            //Console.WriteLine(bank.Withdraw());
+
+            #endregion
+
+            #region FacadePattern
+
+            ShoppingBasket basket = new ShoppingBasket();
+            basket.AddItem(new BasketItem { ItemId = "132", ItemPrice = 59, Quantity = 3 });
+            basket.AddItem(new BasketItem { ItemId = "456", ItemPrice = 49, Quantity = 2 });
+            basket.AddItem(new BasketItem { ItemId = "789", ItemPrice = 39, Quantity = 1 });
+
+            // Facade class within the client without knowing the process complexity
+            // Hiding information
+            PurchaseOrder order = new PurchaseOrder();
+
+            order.CreateOrder(basket, "name:aboelkassem,bank:1526465,mobile:01154321101");
 
             #endregion
         }
