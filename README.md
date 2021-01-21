@@ -290,6 +290,126 @@ Structural patterns are concerned with the composition or relationships of class
 - Composite Pattern
 - Flyweight Pattern
 
+### Facade Pattern
+
+This pattern provide a single simplified **interface** for client classes to interact with subsystem, A facade literally means **the front of a building** or an outward appearance to **hide a less pleasant reality**. The facade pattern essentially does the same job as the definition of the word facade. Its purpose is to **hide the complexity of an interface** or a subsystem. Facade pattern does not actually add more functionality. It simply acts as a point of **entry** into your subsystem
+
+**Facade Pattern** is a **wrapper class** that **encapsulate** a subsystem in order to **hide subsystem's complexity.**
+
+**Real world example**
+
+> How do you turn on the computer? "Hit the power button" you say! That is what you believe because you are using a simple interface that computer provides on the outside, internally it has to do a lot of stuff to make it happen. This simple interface to the complex subsystem is a facade.
+
+**Problem example**
+
+> The following diagram shows the classes for simple banking system without facade, Customer class would contains instances of Chequing, Saving and Investment classes, This means Customer must instantiating each of these classes and know all their different attributes and methods
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/facade-1.png" width="600" hight="600"/>
+</p>
+
+To Solve this problem we introduce the **BankService** Class to act as a **facade class** for chequing, saving and investment classes to deal with any other complexities of financial management instead the customer himself, A facade class can be used to wrap all the **interfaces and classes** for a subsystem not only on interface
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/facade-2.png" width="600" hight="600"/>
+</p>
+
+**Steps to apply Facade Design Pattern**
+
+- **Step1:** Design the interface
+
+```csharp
+public interface IAccount
+{
+    public void deposit(decimal amount);
+    public void withdraw(decimal amount);
+		public void transfer(IAccount toAccount, decimal amount);
+    public int getAccountNumber();
+}
+```
+
+- **Step2**: Implement the interface with one or more classes
+
+```csharp
+public class Chequing : IAccount {.....}
+public class Saving : IAccount {.....}
+public class Investment : IAccount {.....}
+```
+
+- **Step3**: Create the facade class and wrap the classes that implement the interface
+
+```csharp
+public class BankService
+{
+    private Dictionary<int, IAccount> BankAccounts;
+
+    public BankService()
+    {
+        this.BankAccounts = new Dictionary<int, IAccount>();
+    }
+
+    public int createNewAccount(string type, decimal initAmount)
+    {
+        IAccount newAccount = null;
+        switch (type)
+        {
+            case "chequing":
+                newAccount = new Chequing(initAmount);
+                break;
+            case "saving":
+                newAccount = new Saving(initAmount);
+                break;
+            case "investment":
+                newAccount = new Investment(initAmount);
+                break;
+            default:
+                Console.WriteLine("Invalid account type");
+                break;
+        }
+
+        if (newAccount != null)
+        {
+            this.BankAccounts.Add(newAccount.getAccountNumber(), newAccount);
+            return newAccount.getAccountNumber();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public void transferMoney(int to, int from, decimal amount)
+    {
+        IAccount toAccount = this.BankAccounts[to];
+        IAccount fromAccount = this.BankAccounts[from];
+        fromAccount.transfer(toAccount, amount);
+    }
+}
+```
+
+- **Step4:** Use the facade class to access the subsystem/client class
+
+```csharp
+public class Customer
+{
+    public static void Main(string[] args)
+    {
+        BankService bankService = new BankService();
+
+        int mySaving = bankService.createNewAccount("saving", new decimal(500.00));
+        int myInvestment = bankService.createNewAccount("investment", new decimal(1000.00));
+
+        bankService.transferMoney(mySaving, myInvestment, new decimal(300.00));
+    }
+}
+```
+
+**Facade Pattern** removes the need for client classes to manage a subsystem on their own, resulting in less coupling between the subsystem and the client classes
+
+**Facade Pattern** handles instantiation of the appropriate class within the subsystem
+
+**Facade Pattern** provides client classes with a simplified interface for the subsystem
+
 ## Behavioral Patterns
 Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
 - Observer Pattern
