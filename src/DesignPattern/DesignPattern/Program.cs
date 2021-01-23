@@ -1,6 +1,7 @@
 ﻿using DesignPatterns.Creational.FactoryMethod;
 using DesignPatterns.Creational.Singleton;
 using DesignPatterns.Structural.AdapterPattern;
+using DesignPatterns.Structural.CompositePattern;
 using DesignPatterns.Structural.FacadePattern;
 using System;
 using System.Collections;
@@ -58,21 +59,49 @@ namespace DesignPattern
             #endregion
 
             #region AdapterPattern
-            /// <summary>
-            /// The Client Class to pass array of employees
-            /// </summary>
-            string[,] employeesArray = new string[5,4]
-            {
-                {"101","John","SE","10000"},
-                {"102","Smith","SE","20000"},
-                {"103","Dev","SSE","30000"},
-                {"104","Pam","SE","40000"},
-                {"105","Sara","SSE","50000"}
-            };
+            ///// <summary>
+            ///// The Client Class to pass array of employees
+            ///// </summary>
+            //string[,] employeesArray = new string[5,4]
+            //{
+            //    {"101","John","SE","10000"},
+            //    {"102","Smith","SE","20000"},
+            //    {"103","Dev","SSE","30000"},
+            //    {"104","Pam","SE","40000"},
+            //    {"105","Sara","SSE","50000"}
+            //};
 
-            ITarget target = new EmployeeAdapter();
-            Console.WriteLine("HR system passes employee string array to Adapter\n");
-            target.ProcessCompanySalary(employeesArray);
+            //ITarget target = new EmployeeAdapter();
+            //Console.WriteLine("HR system passes employee string array to Adapter\n");
+            //target.ProcessCompanySalary(employeesArray);
+            #endregion
+
+            #region CompositePattern
+            // example of virtual file system 
+            // making directory as composite object and file as leaf
+            // this is the client
+
+            var root = new DirectoryItem("development");
+            var proj1 = new DirectoryItem("project1");
+            var proj2 = new DirectoryItem("project2");
+            root.Add(proj1);
+            root.Add(proj2);
+
+            proj1.Add(new FileItem("p1f1.txt", 2100));
+            proj1.Add(new FileItem("p1f2.txt", 3100));
+
+            var subDir1 = new DirectoryItem("sub-dir1");
+            subDir1.Add(new FileItem("p1f3.txt", 4100));
+            subDir1.Add(new FileItem("p1f4.txt", 5100));
+            proj1.Add(subDir1);
+
+            proj2.Add(new FileItem("p2f1.txt", 6100));
+            proj2.Add(new FileItem("p2f2.txt", 7100));
+
+            Console.WriteLine($"Total size (root): {root.GetSizeInKB()}KB");
+            Console.WriteLine($"Total size (proj1): {proj1.GetSizeInKB()}KB");
+            Console.WriteLine($"Total size (proj2): {proj2.GetSizeInKB()}KB");
+
             #endregion
         }
     }
