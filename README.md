@@ -410,6 +410,118 @@ public class Customer
 
 **Facade Pattern** provides client classes with a simplified interface for the subsystem
 
+### Adapter Pattern
+
+As name suggest, an adapter is a device that is used to connect pieces of equipment that cannot be connected directly. **Software system** also have the same **compatibility** issue with **interfaces,** in other word the output of one system may **not conform** to the expected input of another system, you will find this problem in pre-existing system need to incorporate **third-party** libraries or connect to other systems.
+
+**Real World example**
+
+> Consider that you have some pictures in your memory card and you need to transfer them to your computer. In order to transfer them you need some kind of adapter that is compatible with your computer ports so that you can attach memory card to your computer. In this case card reader is an adapter. Another example would be the famous power adapter; a three legged plug can't be connected to a two pronged outlet, it needs to use a power adapter that makes it compatible with the two pronged outlet. Yet another example would be a translator translating words spoken by one person to another
+
+**The Adapter design pattern** facilitates communication between two existing systems by providing a **compatible interface.** Another definition is allowing incompatible classes to work together by **converting the interface of one class into another expected by the clients.** Examples like **SMS Clients, Database Adapter**
+
+**Class Diagram and The Parts of Adapter Pattern**
+
+- **Client**: the class who wants to use a third-party library or external system
+- **Adaptee**: the class in the third-party library or external system to be used
+- **Adapter**: the class sites between client and the adaptee, it implement a target interface to conforms what the client is expecting to see.
+- **Target Interface**: the interface which the client will use.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/adapter-diagram-1.png" width="400" hight="400"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/adapter-diagram-2.png" width="400" hight="400"/>
+</p>
+
+The above diagram shows that the **client** sends a request to the **adapter** using the **target interface**, The adapter will then translate the request into a message that the **adaptee** will understand.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/adapter-diagram-3.png" width="500" hight="500"/>
+</p>
+
+**The Steps to implement the adapter pattern with example of talking WebClient to WebService**
+
+example is the WebClient want to send **any object** but the WebService only accept a **JSON object**
+
+- **Step1:** Design the target interface
+
+```csharp
+public interface IWebRequester
+{
+    public int request(object request);
+}
+```
+
+- **Step2**: Implement the target interface with the adapter class
+
+```csharp
+public class WebAdapter : IWebRequester
+{
+    private WebService service;
+
+    public void connect(WebService currentService)
+    {
+        this.service = currentService;
+    }
+
+    public int request(object request)
+    {
+        var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(request);
+        **var resposne = service.request(jsonString);**
+        if (resposne != null)
+            return 200; // OK status code
+        return 500; // raise error status code
+    }
+}
+```
+
+- **Step3**: Send the request from the client to the adapter using the target interface
+
+```csharp
+public class WebClient
+{
+    private IWebRequester webRequester;
+
+    public WebClient(IWebRequester webRequester)
+    {
+        this.webRequester = webRequester;
+    }
+
+    public void getInfo()
+    {
+        object obj = new object();
+        **int status = webRequester.request(obj);**
+
+        if (status == 200)
+            Console.WriteLine("OK");
+        else
+            Console.WriteLine("Not OK");
+    }
+}
+```
+
+- **In the main program**, the Web Adapter, the Web Service, and the Web Client needs to be instantiated, The **WebClient** deals with the **adapter** through the **WebRequester** interface to send a request. The WebClient should not need to know anything about the **WebService**, such as its need for JSON objects.
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        string webHost = "https://google.com";
+        WebService service = new WebService(webHost);
+        WebAdapter adapter = new WebAdapter();
+
+        adapter.connect(service);
+
+        WebClient client = new WebClient(adapter);
+        client.getInfo();
+    }
+}
+```
+
+**Why we just change one interface or the both to be able to talk to each other?**
+
+This is not always feasible, especially if the other interface is from **a third-party library** or external system. Changing your system to match the other system is not always a solution either, because an update by the vendors to the outside systems may break part of our system, Also we don't change **our system interface** because if there are sub system using it.
+
 ## Behavioral Patterns
 Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
 - Observer Pattern
