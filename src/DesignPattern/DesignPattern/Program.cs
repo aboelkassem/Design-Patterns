@@ -3,6 +3,7 @@ using DesignPatterns.Creational.Singleton;
 using DesignPatterns.Structural.AdapterPattern;
 using DesignPatterns.Structural.CompositePattern;
 using DesignPatterns.Structural.FacadePattern;
+using DesignPatterns.Structural.ProxyPattern;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,30 +78,38 @@ namespace DesignPattern
             #endregion
 
             #region CompositePattern
-            // example of virtual file system 
-            // making directory as composite object and file as leaf
-            // this is the client
+            //// example of virtual file system 
+            //// making directory as composite object and file as leaf
+            //// this is the client
 
-            var root = new DirectoryItem("development");
-            var proj1 = new DirectoryItem("project1");
-            var proj2 = new DirectoryItem("project2");
-            root.Add(proj1);
-            root.Add(proj2);
+            //var root = new DirectoryItem("development");
+            //var proj1 = new DirectoryItem("project1");
+            //var proj2 = new DirectoryItem("project2");
+            //root.Add(proj1);
+            //root.Add(proj2);
 
-            proj1.Add(new FileItem("p1f1.txt", 2100));
-            proj1.Add(new FileItem("p1f2.txt", 3100));
+            //proj1.Add(new FileItem("p1f1.txt", 2100));
+            //proj1.Add(new FileItem("p1f2.txt", 3100));
 
-            var subDir1 = new DirectoryItem("sub-dir1");
-            subDir1.Add(new FileItem("p1f3.txt", 4100));
-            subDir1.Add(new FileItem("p1f4.txt", 5100));
-            proj1.Add(subDir1);
+            //var subDir1 = new DirectoryItem("sub-dir1");
+            //subDir1.Add(new FileItem("p1f3.txt", 4100));
+            //subDir1.Add(new FileItem("p1f4.txt", 5100));
+            //proj1.Add(subDir1);
 
-            proj2.Add(new FileItem("p2f1.txt", 6100));
-            proj2.Add(new FileItem("p2f2.txt", 7100));
+            //proj2.Add(new FileItem("p2f1.txt", 6100));
+            //proj2.Add(new FileItem("p2f2.txt", 7100));
 
-            Console.WriteLine($"Total size (root): {root.GetSizeInKB()}KB");
-            Console.WriteLine($"Total size (proj1): {proj1.GetSizeInKB()}KB");
-            Console.WriteLine($"Total size (proj2): {proj2.GetSizeInKB()}KB");
+            //Console.WriteLine($"Total size (root): {root.GetSizeInKB()}KB");
+            //Console.WriteLine($"Total size (proj1): {proj1.GetSizeInKB()}KB");
+            //Console.WriteLine($"Total size (proj2): {proj2.GetSizeInKB()}KB");
+            #endregion
+
+            #region ProxyPattern
+
+            SMSServiceProxy proxy = new SMSServiceProxy();
+            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 1"));
+            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 2"));
+            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 3"));
 
             #endregion
         }
