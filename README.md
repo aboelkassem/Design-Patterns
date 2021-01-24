@@ -213,8 +213,8 @@ public class KnifeStore {
 
 **The Benefits of Factory Objects**
 
-- Other clients can use **KnifeFactory** to create knives for other purpose not only **orderKnife** method, meaning if there are multiple clients that want to instantiate the same classes, then by using a Factory object, you have cut out redundant code and made the software easier to modify
-- You can simply add knife types to your **KnifeFactory** without modifying the client code. which allows the developers to **make changes** to the concrete instantiation without touching the **client method**
+- Other clients can use `KnifeFactory` to create knives for other purpose not only `orderKnife` method, meaning if there are multiple clients that want to instantiate the same classes, then by using a Factory object, you have cut out redundant code and made the software easier to modify
+- You can simply add knife types to your `KnifeFactory` without modifying the client code. which allows the developers to **make changes** to the concrete instantiation without touching the **client method**
 - Factories allow client code to operate on **generalizations**. This is known as "**coding to an interface, not an implementation**". The client method does not need to name concrete knife classes, and now deals with a Knife “**generalization**”. As long as the client code receives the object it expects, it can satisfy its responsibilities without worrying about the details of object creation.
 
 ### Factory Method Pattern
@@ -223,7 +223,7 @@ It handles the creation of specific **types of objects** in a different way. **F
 
 Define an **interface** for creating an object, but let subclasses decide which class to instantiate, which mean creating an object without exposing the creation logic to the client and refer to newly created object using a common interface.
 
-**A Factory Method** is responsible for creating the subclasses on it's way, This is known as **letting the  subclasses decide** how objects are made. like BudgetChefsKnife and BudgetSteakKnife
+**A Factory Method** is responsible for creating the subclasses on it's way, This is known as **letting the  subclasses decide** how objects are made. like `BudgetChefsKnife` and `BudgetSteakKnife`
 
 **Steps to apply factory method pattern**
 
@@ -572,9 +572,9 @@ We will use example of how buildings are composed of generic housing structures
 
 **IStructure**: is the **component interface** to describe building like a house, a floor or a room
 
-**Housing**: is the composite class and it's type of **IStructure** and can contains other structures like floors or other housing objects.
+**Housing**: is the composite class and it's type of `IStructure` and can contains other structures like floors or other housing objects.
 
-**Room**: is the leaf class and it's a type of IStructure but cannot contains another room so its leaf.
+**Room**: is the leaf class and it's a type of `IStructure` but cannot contains another room so its leaf.
 
 **The Steps to implement the composite pattern**
 
@@ -698,6 +698,115 @@ class Program
         currentRoom.enter(); // walk into the women's room
         currentRoom = (Room)currentFloor.getStructure(firstcommon);
         currentRoom.enter(); // walk into the common area
+    }
+}
+```
+
+### Proxy Pattern
+
+**The proxy** acts as **lightweight version** of the **original object,** and still able to accomplish the same tasks but may send requests to original object to achieve them. In a proxy pattern setup, a proxy is responsible for representing another object called the **subject.**
+
+Proxy Pattern provides a surrogate or placeholder for another object to control access to it. Like a **gateway** for an object
+
+**Proxy Design Pattern** allows a **proxy class** to represent and wraps a **real "subject" class** which are a part of your system to hide its **reference** like **sensitive info** or resource **intensive to instantiate**.
+
+So the client will interact with the proxy class instead of real "subject" class, **So why we use a proxy class and its types**?
+
+- **To act as a virtual proxy** where the proxy class is used in place of a real class like using on Images and web pages or graphics editors, because single high image can be extremely large. or you have a heavyweight service that wastes system resources by being always up, even you don't need it at this time
+- **To act as a protection proxy** in order to control access to real subject class like using on learning management system that checks the credentials of a user or checking the count of Free SMS subscription
+- **To act as a remote proxy** where the proxy class is local and the real subject class exists remotely like using on Google API Document on your machine and in google server as third-party API
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/proxy-diagram-1.png" width="500" hight="500"/>
+</p>
+
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/proxy-diagram-2.png" width="500" hight="500"/>
+</p>
+
+
+**Example**
+
+> Below is an example of a UML diagram for an online retail store with global distribution and warehousing. In this scenario, you need to determine which warehouse to send orders to. A system will prevent your warehouses from receiving orders that they cannot fulfill. A proxy may protect your real subject, the warehouses, from receiving orders if the warehouses do not have enough stock to fulfill an order.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/proxy-diagram-3.png" width="500" hight="500"/>
+</p>
+
+**Steps to Implement Proxy Pattern**
+
+- Step 1: Design the subject interface
+
+```csharp
+public interface IOrder
+{
+    public void FulFillOrder(Order order);
+}
+```
+
+- Step 2: Implement the real subject class
+
+```csharp
+
+public class Warehouse : IOrder
+{
+    private Dictionary<int, Item> Stock = new Dictionary<int, Item>();
+    private string Address;
+
+    public void FulFillOrder(Order order)
+    {
+        foreach (var item in order.ItemList)
+        {
+            this.Stock.Remove(item.Id);
+        }
+
+        // process the order for shipment and dlivery
+    }
+
+    public int CurrentInventory(Item item)
+    {
+        if (Stock.ContainsKey(item.Id))
+        {
+            return Stock[item.Id].Id;
+        }
+        return 0;
+    }
+}
+```
+
+- Step 3: Implement the proxy class
+
+the `OrderFulfillment` class **checks** warehouse inventory and **ensures** that an order can be completed **before sending** requests to the warehouse. To do this, it asks each warehouse if it has enough stock of a particular item. If a warehouse does, then the item gets added to a new Order object that will be sent to the Warehouse. The OrderFulfillment class also lets you separate order validation from the order fulfillment by separate them into two pieces. This improves the overall rate of processing an order, as the warehouse does not have to worry about the validation process or about re-routing an order if it cannot be fulfilled.
+
+The `OrderFulfillment` class can be improved with other functionalities, such as prioritizing sending orders to warehouses based on proximity to the customer.
+
+```csharp
+public class OrderFulFillment : IOrder
+{
+    private List<Warehouse> Warehouses = new List<Warehouse>();
+
+    public void FulFillOrder(Order order)
+    {
+        // for each item in a customer order, check each warehouse to see if it is in stock
+        // if it is then create a new order for that warehouse
+        // else check the next warehouse
+
+        // Send the all the Orders to the warehouse(s)
+        // after you finish iterating over all the items in
+        // the original Order.
+
+        foreach (var item in order.ItemList)
+        {
+            foreach (var warehouse in Warehouses)
+            {
+                // ..... 
+								// if item in stock
+								// warehouse.FulFillOrder(order);
+            }
+        }
     }
 }
 ```
