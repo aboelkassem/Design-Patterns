@@ -522,6 +522,186 @@ class Program
 
 This is not always feasible, especially if the other interface is from **a third-party library** or external system. Changing your system to match the other system is not always a solution either, because an update by the vendors to the outside systems may break part of our system, Also we don't change **our system interface** because if there are sub system using it.
 
+### Composite Pattern
+
+**Composite Pattern** is meant to compose objects into tree structures to represent part-whole hierarchies, it lets clients treat individual objects and compositions of objects uniformly. For example Composable DTOs.
+
+A **composite design pattern** is meant to achieve two goals:
+
+- To compose nested structures of objects
+- To deal with the classes for theses objects uniformly
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/composite-diagram-1.png" width="400" hight="400"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/composite-diagram-3.png" width="400" hight="100"/>
+</p>
+
+In this design, a component interface serves as the supertype for a set of classes. Using **polymorphism**, all implementing classes conform to the same interface, allowing them to be dealt with uniformly.
+
+**The Composite class** is used to aggregate any class that implements the **component interface.**
+
+**A leaf class** represents a non-composite type. It is not composed of other components.
+
+You may have other composite or leaf classes in practice not just two, but there will only be one overall component interface or abstract superclass. A composite object can contain other composite object, since the composite class is a subtype of component. This is known as **recursive composition**
+
+It is easier to think of composite design patterns as **trees**:
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/composite-diagram-4.png" width="500" hight="500"/>
+</p>
+
+The Composite design pattern is used to address two issues:
+
+- How de we use individual types of objects to build a tree-like structure?
+- How can we treat the individual types without checking their types?
+
+Solve this by enforcing **polymorphism** across each class through implementing **an interface** (or inheriting from a super class) and use technique recursive composition which allows objects to be composed of other objects that are of a common type.
+
+**Real World example**
+
+> Every organization is composed of employees. Each of the employees has the same features i.e. has a salary, has some responsibilities, may or may not report to someone, may or may not have some subordinates etc.
+We will use example of how buildings are composed of generic housing structures
+
+**Class Diagram of the example**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/composite-diagram-5.png" width="500" hight="500"/>
+</p>
+
+**IStructure**: is the **component interface** to describe building like a house, a floor or a room
+
+**Housing**: is the composite class and it's type of **IStructure** and can contains other structures like floors or other housing objects.
+
+**Room**: is the leaf class and it's a type of IStructure but cannot contains another room so its leaf.
+
+**The Steps to implement the composite pattern**
+
+- **Step1:** Design the interface the defines the overall type
+
+```csharp
+public interface IStructure
+{
+    public void enter();
+    public void exit();
+    public void location();
+    public string getName();
+}
+```
+
+- **Step 2:** Implement the composite class
+
+```csharp
+public class Housing : IStructure
+{
+    private List<IStructure> _structures;
+    private string Address;
+
+    public Housing(string address)
+    {
+        this._structures = new List<IStructure>();
+        this.Address = address;
+    }
+    
+    public string getName()
+    {
+        return this.Address;
+    }
+
+    public int addStructure(IStructure component)
+    {
+        _structures.Add(component);
+        return this._structures.Count - 1;
+    }
+    public IStructure getStructure(int componentNumber)
+    {
+        return this._structures[componentNumber];
+    }
+
+    public void enter()
+    {
+        Console.WriteLine("You have entered the build: " + this.getName());
+    }
+
+    public void exit()
+    {
+        Console.WriteLine("You have exit the build: " + this.getName());
+    }
+
+    public void location()
+    {
+        Console.WriteLine("you are currently in " + this.getName() + ". It has");
+        foreach (var str in this._structures)
+        {
+            Console.WriteLine(str.getName());
+        }
+    }
+}
+```
+
+- **Step 3:** Implement the leaf class
+
+```csharp
+public class Room : IStructure
+{
+    public string name;
+
+    public void enter()
+    {
+        Console.WriteLine("you have entered the " + this.name);
+    }
+
+    public void exit()
+    {
+        Console.WriteLine("you have left the " + this.name);
+    }
+
+    public string getName()
+    {
+        return name;
+    }
+
+    public void location()
+    {
+        Console.WriteLine("you have currently in the " + this.name);
+    }
+}
+```
+
+- **In main program/client**
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        Housing building = new Housing("123 street");
+        Housing floor1 = new Housing("123 street- First Floor");
+        int firstFloor = building.addStructure(floor1);
+
+        Room washroom1m = new Room("1F Mean's Washroom");
+        Room washroom1w = new Room("1F Women's Washroom");
+        Room common1 = new Room("1F Common Area");
+
+        int firstMeans = floor1.addStructure(washroom1m);
+        int firstWomens = floor1.addStructure(washroom1w);
+        int firstcommon = floor1.addStructure(common1);
+
+        building.enter(); // enter the building
+        Housing currentFloor = (Housing)building.getStructure(firstFloor);
+        currentFloor.enter(); // walk into the first floor
+
+        Room currentRoom = (Room)currentFloor.getStructure(firstMeans);
+        currentRoom.enter(); // walk into the men's room;
+        currentRoom = (Room)currentFloor.getStructure(firstWomens);
+        currentRoom.enter(); // walk into the women's room
+        currentRoom = (Room)currentFloor.getStructure(firstcommon);
+        currentRoom.enter(); // walk into the common area
+    }
+}
+```
+
 ## Behavioral Patterns
 Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
 - Observer Pattern
