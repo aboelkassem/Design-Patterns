@@ -811,6 +811,148 @@ public class OrderFulFillment : IOrder
 }
 ```
 
+### Decorator Pattern
+
+**The decorator pattern** adds new functionality to objects without modifying their defining classes. Like Open–closed principle.
+
+Decorator Pattern allows additional behaviors or responsibilities to be dynamically **attached to an object,** through the use of **aggregation** to combine behaviors at **runtime**.
+
+**Decorator** provide a flexible alternative to sub classing for extending functionality. Also Know as: **Wrapper**
+
+**Like** a Black Coffee, Milk Coffee, Whip Coffee, and Vanilla Coffee
+
+- Black Coffee = the base
+- Milk Coffee = Black Coffee + Milk
+- Whip Coffee = Black Coffee + Milk + Whip
+- Vanilla Coffee = Black Coffee + Milk + Whip + Vanilla
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/decorator-adding-functionality.png" width="100" hight="100"/>
+</p>
+
+**Real World Example**
+
+> Imagine you run a car service shop offering multiple services. Now how do you calculate the bill to be charged? You pick one service and dynamically keep adding to it the prices for the provided services till you get the final cost. Here each type of service is a decorator.
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/decorator-diagram-1.png" width="500" hight="500"/>
+</p>
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/decorator-diagram-2.png" width="500" hight="500"/>
+</p>
+
+**Decorator** is an **abstract class** that implements component interface to aggregates other types of component which allow use to "stack" components on top of each other.
+
+**Decorator** serves as the abstract superclass of concrete decorator classes that will each provide an **increment of behavior**.
+
+We build the stack of components starting with an instance of `ConcreteComponent` class and continuing with subclasses of the decorator abstract class.
+
+**Example**
+
+> You have a SMS service that provide sending SMS messages, you need to add more functionality when the SMS message has been sent, you will notify the customer at his email.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/decorator-diagram-3.png" width="500" hight="500"/>
+</p>
+
+you can define any number of additional behaviors you want to `ConcereteSMSService` like `NotificationEmailDecorator`, that's better, unlike if you use inheritance of ConcereteSMSService, you will need to create a class for every combination of these behaviors
+
+**Steps to implement Decorator Pattern**
+
+- **Step 1:** Design the component interface
+
+```csharp
+public interface ISMSService
+{
+    public string SendSMS(string custId, string mobile, string sms);
+}
+```
+
+- **Step 2:** Implement the interface with your base concrete component class
+
+```csharp
+public class ConcereteSMSService : ISMSService
+{
+    public string SendSMS(string custId, string mobile, string sms)
+    {
+        return $"CustomerId {custId},the message {sms}, had sent to {mobile} successfully";
+    }
+}
+```
+
+- **Step 3:** Implement the interface with your abstract decorator class
+
+```csharp
+public abstract class AbstractDecorator: ISMSService
+{
+    protected ISMSService notificationService;
+
+    public AbstractDecorator(ISMSService service)
+    {
+        notificationService = service;
+    }
+
+    public string SendSMS(string custId, string mobile, string sms)
+    {
+        if (notificationService != null)
+        {
+            return notificationService.SendSMS(custId, mobile, sms);
+        }
+        else
+        {
+            return "Notification service not initialized!";
+        }
+    }
+}
+```
+
+- **Step 4:** inherit from the abstract decorator and implement the component interface with concrete decorator classes
+
+```csharp
+public class NotificationEmailDecorator : AbstractDecorator
+{
+    public NotificationEmailDecorator(ISMSService service) : base(service)
+    {
+    }
+
+    public string SendSMSAndEmailNotifier(string custId, string mobile, string sms)
+    {
+				// get the base and add on it
+        StringBuilder result = new StringBuilder();
+        result.AppendLine(base.SendSMS(custId, mobile, sms));
+
+        // decorator method to send mail (additional functionality)
+        // sending email logic here
+        result.AppendLine($"this mail about sending SMS {sms}, send to {custId}, at {DateTime.Now.ToLongDateString()}");
+
+        return result.ToString();
+    }
+}
+```
+
+- **In Main Program/client**
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        ISMSService smsService = new ConcereteSMSService();
+        // any additional Concrete Decorators
+        NotificationEmailDecorator emailDecorator = new NotificationEmailDecorator(smsService);
+
+        Console.WriteLine(emailDecorator.SendSMSAndEmailNotifier("123", "01154321101", "message 1"));
+
+			// Output
+			// CustomerId 123,the message message 1, had sent to 01154321101 successfully
+			// this mail about sending SMS message 1, send to 123, at Monday, January 25, 2021
+    }
+}
+```
+
 ## Behavioral Patterns
 Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
 - Observer Pattern
