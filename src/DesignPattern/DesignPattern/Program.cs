@@ -2,12 +2,14 @@
 using DesignPatterns.Creational.Singleton;
 using DesignPatterns.Structural.AdapterPattern;
 using DesignPatterns.Structural.CompositePattern;
+using DesignPatterns.Structural.DecoratorPattern;
+using DesignPatterns.Structural.DecoratorPattern.Decorators;
 using DesignPatterns.Structural.FacadePattern;
 using DesignPatterns.Structural.ProxyPattern;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Text;
 
 namespace DesignPattern
 {
@@ -106,11 +108,34 @@ namespace DesignPattern
 
             #region ProxyPattern
 
-            SMSServiceProxy proxy = new SMSServiceProxy();
-            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 1"));
-            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 2"));
-            Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 3"));
+            //SMSServiceProxy proxy = new SMSServiceProxy();
+            //Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 1"));
+            //Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 2"));
+            //Console.WriteLine(proxy.SendSMS("123", "01154321101", "message 3"));
 
+            #endregion
+
+            #region DecoratorPattern
+
+            bool smsNotificationEnabled = false;
+            bool whatsAppNotificationEnabled = true;
+            INotifier notifier = new EmailNotifier("mohamedabdelrahman9972@gmail.com");
+
+            // Adding SMS Notification to emailing service
+            if (smsNotificationEnabled)
+            {
+                notifier = new SMSNotifierDecorator(notifier, "01154321101");
+            }
+
+            // Adding WhatsApp Notification to emailing service
+            if (whatsAppNotificationEnabled)
+            {
+                notifier = new WhatsAppNotifierDecorator(notifier, "01154321101");
+            }
+
+            // Default that is sending Email
+            notifier.notify();
+            
             #endregion
         }
     }

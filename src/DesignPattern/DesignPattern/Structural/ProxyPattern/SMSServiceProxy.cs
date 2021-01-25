@@ -13,6 +13,7 @@ namespace DesignPatterns.Structural.ProxyPattern
     {
         // if calls for each customer > 100 don't send request to SMS service class
 
+        //private ConcereteSMSService _smsService;
         private ISMSService _smsService;
         // Database
         private Dictionary<string, int> _smsCount = new Dictionary<string, int>();
