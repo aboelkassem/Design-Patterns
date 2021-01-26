@@ -966,3 +966,151 @@ Behavioral design patterns dictate the interaction and assignment of responsibil
 - Mediator Pattern
 - Memento Pattern
 - State Pattern
+
+### Template Method Pattern
+
+As name suggest, You may have used a template for writing your resume. The template would define the overall structure of the document and leave the details to be added in by you.
+
+**The template method** defines an **algorithm's steps** generally letting the implementation of some steps to subclasses. It define the operations into Abstract class to allow subclasses override. It depend in **generalization and inheritance**
+
+Note that the classes may choose to ignore overriding certain steps or choose to rely on the default implementation provided by the abstract class.
+
+Think of it like another technique to use when you notice you have two separate classes with very **similar functionality and very similar order of operations**, After using generalization you can share the functionality between the classes.
+
+**Real world example**
+
+> Suppose we are getting some house built. The steps for building might look like
+- Prepare the base of house
+- Build the walls
+- Add roof
+- Add other floors
+The order of these steps could never be changed i.e. you can't build the roof before building the walls etc, but each of the steps could be modified for example walls can be made of wood or polyester or stone.
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/template-method-pattern-1.png" width="500" hight="500"/>
+</p>
+
+**Example**
+
+> imagine you are an executive chef, The two most popular dishes are spaghetti with tomato sauce and meatballs, and penne noodles with alfredo sauce and chicken. Both dishes have the same steps to cook like boil water, cook pasta, add the sauce and garnish etc but each one have it's own implementation depending, each dish has a different sauce, protein, and garnish
+
+**UML Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/template-method-pattern-2.png" width="500" hight="500"/>
+</p>
+
+**Steps to implement it**
+
+- **Step 1**: Define Abstract class and Template Method
+
+```csharp
+public abstract class PastaDish
+{
+    // The template method defines the skeleton of an algorithm.
+    public void MakeRecipe()
+    {
+        // The fixed steps
+        BoilWater();
+        AddPasta();
+        CookPasta();
+        DrainAndPlate();
+        AddSauce();
+        AddProtein();
+        AddGarnish();
+        Console.WriteLine("==========================================");
+        Console.WriteLine("The dish has prepared");
+        Console.WriteLine("==========================================");
+    }
+
+    protected abstract void AddPasta();
+    protected abstract void AddSauce();
+    protected abstract void AddProtein();
+    protected abstract void AddGarnish();
+
+    private void BoilWater()
+    {
+        Console.WriteLine("Boiling Water");
+    }
+
+    private void CookPasta()
+    {
+        Console.WriteLine("cooking pasta");
+    }
+
+    private void DrainAndPlate()
+    {
+        Console.WriteLine("Draining and plating");
+    }
+}
+```
+
+- **Step 2**: Inherit them in concrete class
+
+```csharp
+public class SpaghettiMeatballs : PastaDish
+{
+    protected override void AddGarnish()
+    {
+        Console.WriteLine("Adding Garnish for Spaghetti dish");
+    }
+
+    protected override void AddPasta()
+    {
+        Console.WriteLine("Adding Pasta for Spaghetti dish");
+    }
+
+    protected override void AddProtein()
+    {
+        Console.WriteLine("Adding Protein for Spaghetti dish");
+    }
+
+    protected override void AddSauce()
+    {
+        Console.WriteLine("Adding Sauce for Spaghetti dish");
+    }
+}
+```
+
+```csharp
+public class PennaAlfredo : PastaDish
+{
+    protected override void AddGarnish()
+    {
+        Console.WriteLine("Adding Garnish for Penna Alfraedo dish");
+    }
+
+    protected override void AddPasta()
+    {
+        Console.WriteLine("Adding Pasta for Penna Alfraedo dish");
+    }
+
+    protected override void AddProtein()
+    {
+        Console.WriteLine("Adding Protein for Penna Alfraedo dish");
+    }
+
+    protected override void AddSauce()
+    {
+        Console.WriteLine("Adding Sauce for Penna Alfraedo dish");
+    }
+}
+```
+
+- **In Main Program**
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        PastaDish spaghettiDish = new SpaghettiMeatballs();
+        spaghettiDish.MakeRecipe(); // Invoke Tempate Method
+
+        PastaDish pennaDish = new PennaAlfredo();
+        pennaDish.MakeRecipe(); // Invoke Tempate Method
+    }
+}
+```
