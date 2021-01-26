@@ -1,4 +1,6 @@
-﻿using DesignPatterns.Creational.FactoryMethod;
+﻿using DesignPatterns.Behavioral.TemplateMethodPattern;
+using DesignPatterns.Behavioral.TemplateMethodPattern.Loggers;
+using DesignPatterns.Creational.FactoryMethod;
 using DesignPatterns.Creational.Singleton;
 using DesignPatterns.Structural.AdapterPattern;
 using DesignPatterns.Structural.CompositePattern;
@@ -17,6 +19,8 @@ namespace DesignPattern
     {
         static void Main(string[] args)
         {
+            // Creational Design Pattern
+
             #region SingletonPattern
             //Counter counter1 = Counter.GetInstance();
             //Counter counter2 = Counter.GetInstance();
@@ -45,6 +49,8 @@ namespace DesignPattern
             //Console.WriteLine(bank.Withdraw());
 
             #endregion
+
+            // Structural Design Pattern
 
             #region FacadePattern
 
@@ -117,25 +123,41 @@ namespace DesignPattern
 
             #region DecoratorPattern
 
-            bool smsNotificationEnabled = false;
-            bool whatsAppNotificationEnabled = true;
-            INotifier notifier = new EmailNotifier("mohamedabdelrahman9972@gmail.com");
+            //bool smsNotificationEnabled = false;
+            //bool whatsAppNotificationEnabled = true;
+            //INotifier notifier = new EmailNotifier("mohamedabdelrahman9972@gmail.com");
 
-            // Adding SMS Notification to emailing service
-            if (smsNotificationEnabled)
-            {
-                notifier = new SMSNotifierDecorator(notifier, "01154321101");
-            }
+            //// Adding SMS Notification to emailing service
+            //if (smsNotificationEnabled)
+            //{
+            //    notifier = new SMSNotifierDecorator(notifier, "01154321101");
+            //}
 
-            // Adding WhatsApp Notification to emailing service
-            if (whatsAppNotificationEnabled)
-            {
-                notifier = new WhatsAppNotifierDecorator(notifier, "01154321101");
-            }
+            //// Adding WhatsApp Notification to emailing service
+            //if (whatsAppNotificationEnabled)
+            //{
+            //    notifier = new WhatsAppNotifierDecorator(notifier, "01154321101");
+            //}
 
-            // Default that is sending Email
-            notifier.notify();
-            
+            //// Default that is sending Email
+            //notifier.notify();
+
+            #endregion
+
+            // Behavioral Design Pattern
+            #region TemplateMethodPattern
+            AbstractLogger fileLogger = new FileLogger();
+            fileLogger.Log("Message to Log in File.");
+
+            AbstractLogger emailLogger = new EmailLogger();
+            emailLogger.Log("Message to Log via Email.");
+
+            AbstractLogger databaseLogger = new DatabaseLogger();
+            databaseLogger.Log("Message to Log in DB.");
+            #endregion
+
+            #region ChainOfResponsibilityPattern
+
             #endregion
         }
     }
