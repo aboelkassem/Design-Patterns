@@ -1114,3 +1114,53 @@ class Program
     }
 }
 ```
+### Chain Of Responsibility Pattern
+
+As name suggest, **A chain of objects that are responsible for handling requests**, It is a series of **handler objects** that are linked together.
+
+When a client object sends a request, the first handler in the chain will try to process it. If the handler can process the request, then the request ends with this handler. However, if the hander cannot handle the request, then the request is sent to the next handler in the chain. This process will continue until a handler can process the request. If the last handler cannot process then the request is not satisfied.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/chainOfResponsibility-1.png" width="500" hight="200"/>
+</p>
+
+**How to work?** so like trying everything until something works. Each object tries to handle the request until one is able to successfully handle it like **Exception handling in programming languages**
+
+**Where to use?** examples like setting up a lot of ways to filter the emails from spam, social media, Promotions. or Validating something
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/chainOfResponsibility-2.png" width="500" hight="200"/>
+</p>
+
+**Real world example**
+
+> For example, you have three payment methods (`A`, `B` and `C`) setup in your account; each having a different amount in it. `A` has 100 USD, `B` has 300 USD and `C` having 1000 USD and the preference for payments is chosen as `A` then `B` then `C`. You try to purchase something that is worth 210 USD. Using Chain of Responsibility, first of all account A will be checked if it can make the purchase, if yes purchase will be made and the chain will be broken. If not, request will move forward to account `B` checking for amount if yes chain will be broken otherwise the request will keep forwarding till it finds the suitable handler. Here `A`, `B` and `C` are links of the chain and the whole phenomenon is Chain of Responsibility.
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/chainOfResponsibility-3.png" width="500" hight="500"/>
+</p>
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/chainOfResponsibility-4.png" width="500" hight="500"/>
+</p>
+
+**Algorithm to solve problem if it's rules doesn't match and forgets to pass the request into the next filter, We will use Template Method Pattern to make sure follow this algorithm.**
+
+- Check if rules matches
+- If it matches, do something specific
+- If it doesn't match, call the next filter/handler in the list
+
+The intent of this pattern is to **avoid coupling** the sender to the receiver by giving more than object
+
+What the benefits?
+
+- A more extensible, object-oriented and dynamic implementation
+- Easily re-arrange in what order the handlers operate
+- Clear approach with single responsibility in min instead of different conditions
+
+**Example**
+
+> See the [example 1](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/ChainOfResponsibilityPattern/NoSeparationExample) of Payment Processing system in C# with no separation
+ See the [example 2](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/ChainOfResponsibilityPattern/SeparationExample) of Payment Processing system in C# with improvement separation
