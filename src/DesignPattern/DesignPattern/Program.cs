@@ -1,4 +1,7 @@
-﻿using DesignPatterns.Behavioral.TemplateMethodPattern;
+﻿using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.Models;
+using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers;
+using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers.PaymentHandlers;
+using DesignPatterns.Behavioral.TemplateMethodPattern;
 using DesignPatterns.Behavioral.TemplateMethodPattern.Loggers;
 using DesignPatterns.Creational.FactoryMethod;
 using DesignPatterns.Creational.Singleton;
@@ -146,18 +149,53 @@ namespace DesignPattern
 
             // Behavioral Design Pattern
             #region TemplateMethodPattern
-            AbstractLogger fileLogger = new FileLogger();
-            fileLogger.Log("Message to Log in File.");
+            //AbstractLogger fileLogger = new FileLogger();
+            //fileLogger.Log("Message to Log in File.");
 
-            AbstractLogger emailLogger = new EmailLogger();
-            emailLogger.Log("Message to Log via Email.");
+            //AbstractLogger emailLogger = new EmailLogger();
+            //emailLogger.Log("Message to Log via Email.");
 
-            AbstractLogger databaseLogger = new DatabaseLogger();
-            databaseLogger.Log("Message to Log in DB.");
+            //AbstractLogger databaseLogger = new DatabaseLogger();
+            //databaseLogger.Log("Message to Log in DB.");
             #endregion
 
             #region ChainOfResponsibilityPattern
+            var order = new Order();
+            order.AddLineItem(new LineItem("GUID 1", "Product Name One", 499), 2);
+            order.AddLineItem(new LineItem("GUID 2", "Product Name Two", 799), 1);
 
+            order.AddPayment(new Payment
+            {
+                PaymentProvider = PaymentProvider.Paypal,
+                Amount = 1000
+            });
+
+            order.AddPayment(new Payment
+            {
+                PaymentProvider = PaymentProvider.Invoice,
+                Amount = 797
+            });
+
+            Console.WriteLine($"Amount Due:      \t {order.AmountDue}");
+            Console.WriteLine($"Shipping Status: \t {order.ShippingStatus}");
+            Console.WriteLine();
+
+            // chain of responsibilities with OOP No Separation Example
+            // var handler = new PaypalHandler();
+            // handler.SetNext(new CreditCardHandler())
+            //     .SetNext(new InvoiceHandler());
+
+            // handler.Handle(order);
+
+            // chain of responsibilities with OOP Separation Example
+            var handler = new PaymentHandler()
+                .SetNext(new PaypalHandler())
+                .SetNext(new InvoiceHandler())
+                .SetNext(new CreditCardHandler());
+            handler.Handle(order);
+
+            Console.WriteLine($"Amount Due:      \t {order.AmountDue}");
+            Console.WriteLine($"Shipping Status: \t {order.ShippingStatus}");
             #endregion
         }
     }
