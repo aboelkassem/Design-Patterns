@@ -1146,7 +1146,7 @@ When a client object sends a request, the first handler in the chain will try to
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/chainOfResponsibility-4.png" width="500" hight="500"/>
 </p>
 
-**Algorithm to solve problem if it's rules doesn't match and forgets to pass the request into the next filter, We will use Template Method Pattern to make sure follow this algorithm.**
+**Algorithm to solve problem if it's rules doesn't match and forgets to pass the request into the next filter, We will use `Template Method Pattern` to make sure follow this algorithm.**
 
 - Check if rules matches
 - If it matches, do something specific
@@ -1164,3 +1164,168 @@ What the benefits?
 
 > See the [example 1](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/ChainOfResponsibilityPattern/NoSeparationExample) of Payment Processing system in C# with no separation
  See the [example 2](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/ChainOfResponsibilityPattern/SeparationExample) of Payment Processing system in C# with improvement separation
+
+### State Pattern
+
+**State Pattern** lets you change the behavior of a class when the state changes.
+
+**State Pattern** mean that the objects in your code are aware of their current state. They can choose an appropriate behavior based on their current state. When their current state changes, this behavior can be changed. It is used when you need to change the behavior of an object based upon the state.
+
+you can also you the pattern to simplify methods with long conditionals that depend on the object state.
+
+**UML Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/state-pattern-1.png" width="500" hight="500"/>
+</p>
+
+**Real World Example**
+
+> Imagine you are using some drawing application, you choose the paint brush to draw. Now the brush changes its behavior based on the selected color i.e. if you have chosen red color it will draw in red, if blue then it will be in blue etc.
+
+**Example**
+
+A vending machine has several states, and specific actions based on those states, Like `Idle` when the machine stay waiting for action, `Has One Dollar` when someone entered a dollar coin to buy some thing, `Out of Stock` when the machine doesn't have any of this item. and some actions like `doRetunMoney` or `doReleaseProduct`
+
+**State Diagram of the example**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/state-pattern-2.png" width="500" hight="500"/>
+</p>
+
+**Class Diagram of the example**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/state-pattern-3.png" width="500" hight="500"/>
+</p>
+
+**Steps to apply State Pattern**
+
+- **Step 1:** define State interface
+
+```csharp
+public interface State
+{
+    // all potential vending machine triggers and events
+    // that change the state of the object
+    public void InsertDollar(VendingMachine vendingMachine);
+    public void EnjectMoney(VendingMachine vendingMachine);
+    public void Dispense(VendingMachine vendingMachine);
+}
+```
+
+- **Step2:** Implement the states class that implement this interface
+
+```csharp
+public class IdleState : State
+{
+
+    public void InsertDollar(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("dollar inserted");
+        vendingMachine.CurrentState = vendingMachine.HasOneDollarState;
+    }
+
+    public void EnjectMoney(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("no money to return");
+    }
+
+    public void Dispense(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("payment required");
+    }
+}
+
+public class HasOneDollarState : State
+{
+
+    public void InsertDollar(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("already have one dollar");
+
+        vendingMachine.doReturnMoney();
+        vendingMachine.CurrentState = vendingMachine.IdleState;
+    }
+
+    public void EnjectMoney(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("returning money");
+
+        vendingMachine.doReturnMoney();
+        vendingMachine.CurrentState = vendingMachine.IdleState;
+    }
+
+    public void Dispense(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("releasing product");
+
+        if (vendingMachine.Count > 1)
+        {
+            vendingMachine.doReleaseProduct();
+            vendingMachine.CurrentState = vendingMachine.IdleState;
+        }
+        else
+        {
+            vendingMachine.doReleaseProduct();
+            vendingMachine.CurrentState = vendingMachine.OutOfStockState;
+        }
+    }
+}
+
+public class OutOfStockState : State
+{
+
+    public void InsertDollar(VendingMachine vendingMachine)
+    {
+        Console.WriteLine("sorry, there are no items in the stock");
+        vendingMachine.doReturnMoney();
+    }
+
+    public void EnjectMoney(VendingMachine vendingMachine)
+    {
+        vendingMachine.doReturnMoney();
+    }
+
+    public void Dispense(VendingMachine vendingMachine)
+    { }
+}
+```
+
+- The Vending machine class will be like this
+
+```csharp
+public class VendingMachine
+{
+    public State IdleState { get; set; } = new IdleState();
+    public State HasOneDollarState { get; set; } = new HasOneDollarState();
+    public State OutOfStockState { get; set; } = new OutOfStockState();
+
+    public State CurrentState { get; set; }
+    public int Count { get; set; }
+
+    public VendingMachine(int count)
+    {
+        if (count > 0)
+        {
+            CurrentState = IdleState;
+            this.Count = count;
+        }
+        else
+        {
+            CurrentState = OutOfStockState;
+            this.Count = 0;
+        }
+    }
+
+    public void insertDollar() => CurrentState.InsertDollar(this);
+
+    public void ejectMoney() => CurrentState.EnjectMoney(this);
+
+    public void dispense() => CurrentState.Dispense(this);
+
+    public void doReturnMoney() => Console.WriteLine("Returning money for the user");
+
+    public void doReleaseProduct() => Console.WriteLine("Returning item product for the user");
+}
+```
