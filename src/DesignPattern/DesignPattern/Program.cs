@@ -1,6 +1,8 @@
 ﻿using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.Models;
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers;
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers.PaymentHandlers;
+using DesignPatterns.Behavioral.CommandPattern.Commands;
+using DesignPatterns.Behavioral.CommandPattern.Repository;
 using DesignPatterns.Behavioral.StatePattern.Context;
 using DesignPatterns.Behavioral.TemplateMethodPattern;
 using DesignPatterns.Behavioral.TemplateMethodPattern.Loggers;
@@ -201,22 +203,70 @@ namespace DesignPattern
             #endregion
 
             #region StatePattern
-            // Context is you have warrior and every battle taken he get stronger
-            // his states changes
-            Warrior w = new Warrior();
-            w.ShowHealth();
+            //// Context is you have warrior and every battle taken he get stronger
+            //// his states changes
+            //Warrior w = new Warrior();
+            //w.ShowHealth();
 
-            w.Battle();
-            w.ShowHealth();
+            //w.Battle();
+            //w.ShowHealth();
 
-            w.Battle();
-            w.ShowHealth();
+            //w.Battle();
+            //w.ShowHealth();
 
-            w.Battle();
-            w.ShowHealth();
+            //w.Battle();
+            //w.ShowHealth();
 
-            w.Battle();
-            w.ShowHealth();
+            //w.Battle();
+            //w.ShowHealth();
+
+            #endregion
+
+            #region CommandPattern
+            var shoppingCartRepo = new ShoppingCartRepository();
+            var productsRepo = new ProductsRepository();
+
+            var product = productsRepo.FindBy("1");
+
+            var addToCartCommand = new AddToCartCommand(shoppingCartRepo, productsRepo, product);
+            var increaseQuantityCommand = new ChangeQuantityCommand(
+                ChangeQuantityCommand.Operation.Increase,
+                shoppingCartRepo,
+                productsRepo,
+                product);
+
+            var manager = new CommandManager();
+            manager.Invoke(addToCartCommand);
+            manager.Invoke(increaseQuantityCommand);
+            manager.Invoke(increaseQuantityCommand);
+            manager.Invoke(increaseQuantityCommand);
+            manager.Invoke(increaseQuantityCommand);
+
+            PrintCart(shoppingCartRepo);
+
+            // undoing all shopping products/commands to back to stock
+            manager.Undo();
+
+            PrintCart(shoppingCartRepo);
+
+            void PrintCart(ShoppingCartRepository repo)
+            {
+                if (repo == null) throw new ArgumentNullException(nameof(repo));
+
+                var p = repo.Get(product.ArticleId);
+
+                if (p == null)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Your cart is empty");
+                    return;
+                }
+
+                Console.WriteLine("In your cart is the following item: ");
+                Console.WriteLine($"Product name: { p.Name }");
+                Console.WriteLine($"Amount in stock: {p.AmountInStock}");
+                Console.WriteLine($"Quantity in basket: {p.Quantity}");
+            }
 
             #endregion
         }
