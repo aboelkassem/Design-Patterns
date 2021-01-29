@@ -1385,3 +1385,185 @@ Creating these requests as objects allows you to create very useful functionalit
 - **Decouples the objects of your software**
 
 > For Example see [the source code](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/CommandPattern)
+
+### Mediator Pattern
+
+Mediator pattern adds a **third party object** (called *`mediator`*) to control the **interaction** between two or more objects (called `colleagues`). It helps reduce the coupling between the classes communicating with each other by encapsulating them. Because now they don't need to have the knowledge of each other's implementation.
+
+Imagine that you want the house of the future. You want your house to change its own temperature once you have left, to brew your coffee when the alarm on your phone goes off, and to load the latest Globe and Mail news issue onto your tablet if you're home and it's Saturday morning, you keep adding more rules and more devices. Eventually you realize interactions between two objects is becoming complicated and difficult to maintain like this:
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/mediator-pattern-1.png" width="500" hight="500"/>
+</p>
+
+To be solve this problem and simply use mediator pattern, **In the Mediator pattern**, you will add an object that will talk to all of these other objects and coordinate their activities. Now, they all interact through the mediator. The communication between an object and the mediator is **two-way:** the object informs the mediator when something happens. Then The mediator can perform logic on these events.
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/mediator-pattern-2.png" width="400" hight="400"/>
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/mediator-pattern-3.png" width="400" hight="400"/>
+</p>
+
+**Real World Example**
+
+> A general example would be when you talk to someone on your mobile phone, there is a network provider sitting between you and them and your conversation goes through it instead of being directly sent. In this case network provider is mediator.
+
+**UML Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/mediator-pattern-4.png" width="500" hight="500"/>
+</p>
+
+**Example**
+
+The example will be the `chatroom` between team member `developer` and `tester`
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/mediator-pattern-5.png" width="500" hight="500"/>
+</p>
+
+- Define the mediator abstract class
+
+```csharp
+public abstract class Chatroom
+{
+    public abstract void Register(TeamMember member);
+    public abstract void Send(string from, string message);
+    // Send message to the specific objects like sending to only developers, only testers
+    public abstract void SendTo<T>(string from, string message) where T : TeamMember;
+}
+```
+
+- Define the Colleague abstract class that talk to the mediator
+
+```csharp
+public abstract class TeamMember
+{
+    public string Name { get; }
+    private Chatroom chatroom;
+
+    public TeamMember(string name)
+    {
+        this.Name = name;
+    }
+
+    // Set Mediator
+    internal void SetChatroom(Chatroom chatroom)
+    {
+        this.chatroom = chatroom;
+    }
+
+    // Sending messages to mediator
+    public void Send(string message)
+    {
+        this.chatroom.Send(this.Name, message);
+    }
+    // Receiving a chat message
+    public virtual void Receive(string from, string message)
+    {
+        Console.WriteLine($"from {from}: '{message}'");
+    }
+
+    public void SendTo<T>(string message) where T : TeamMember
+    {
+        this.chatroom.SendTo<T>(this.Name, message);
+    }
+}
+```
+
+- Implement Concrete mediator
+
+```csharp
+public class TeamChatroom : Chatroom
+{
+    private List<TeamMember> members = new List<TeamMember>();
+
+    // References
+    // just set up/register connection between mediator and colleague 
+    public override void Register(TeamMember member)
+    {
+        member.SetChatroom(this);
+        this.members.Add(member);
+    }
+
+    // Sending this message for each members
+    public override void Send(string from, string message)
+    {
+        this.members.ForEach(m => m.Receive(from, message));
+    }
+
+    // Register team members at once
+    public void RegisterMembers(params TeamMember[] teamMembers)
+    {
+        foreach (var member in teamMembers)
+        {
+            this.Register(member);
+        }
+    }
+
+    public override void SendTo<T>(string from, string message)
+    {
+        this.members.OfType<T>().ToList().ForEach(m => m.Receive(from, message));
+    }
+}
+```
+
+- Implement concrete colleagues/team members
+
+```csharp
+public class Developer : TeamMember
+{
+    public Developer(string name): base(name)
+    {
+
+    }
+
+    public override void Receive(string from, string message)
+    {
+        Console.Write($"{this.Name} ({nameof(Developer)}) has received: ");
+        base.Receive(from, message);
+    }
+}
+
+public class Tester : TeamMember
+{
+    public Tester(string name) : base(name)
+    {
+
+    }
+
+    public override void Receive(string from, string message)
+    {
+        Console.Write($"{this.Name} ({nameof(Tester)}) has received: ");
+        base.Receive(from, message);
+    }
+}
+```
+
+- In Main program
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        var teamChat = new TeamChatroom();
+
+        var mohamed = new Developer("Mohamed");
+        var ahmed = new Developer("Ahmed");
+        var shimaa = new Tester("Shimaa");
+        var sara = new Tester("Sara");
+
+        teamChat.RegisterMembers(mohamed, ahmed, shimaa, sara);
+
+        mohamed.Send("Hey everyone, i'm mohamed, lets get some fun");
+        Console.WriteLine();
+        shimaa.Send("Oh, i have found issue while i testing your app");
+        Console.WriteLine();
+
+        // developer objects will only receive this message
+        ahmed.SendTo<Developer>("hey developers, i have bug i cannot fix it, anyone can help?");
+    }
+}
+```
+
+See [another example](https://github.com/OlufemiFowosire/PluralsightDesignPatternsPracticeCodes/tree/cf8a3d8eb5809b413c6a7419dc6943f2821902ea/Patterns/Mediator/MediatorDemo/MarkerPositions) for marker positions with WebForms
