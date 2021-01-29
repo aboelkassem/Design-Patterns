@@ -1329,3 +1329,59 @@ public class VendingMachine
     public void doReleaseProduct() => Console.WriteLine("Returning item product for the user");
 }
 ```
+
+### Command Pattern
+
+**Command Pattern** allows you to **encapsulate actions/methods in objects**.
+
+The usual way is Sender object call method in Receiver object to run this method. The command pattern creates a command object in between the sender and receiver. Command Pattern means creates command objects instead of normal methods
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-1.png" width="300" hight="100"/>
+</p>
+
+The **Sender** creates a **command object**, **Invoker** invokes ****the command object do what it’s supposed to do. The invoker keeps track of the commands, manipulates them and invokes them.
+
+The important thing is that the command pattern lets you **do things to request** that you wouldn't be able to do if they were simple method calls from one object to another.
+
+Creating these requests as objects allows you to create very useful functionality in your software.
+
+**what is the purposes of the command pattern?**
+
+- **Store and schedule different requests.** When you use an method of another object, you can store this command objects into lists, manipulate them before they are completed, put them onto a queue.
+- Allowing commands to be undone or redone like **undo or redo** edits in a document or any type in applications
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-2.png" width="500" hight="500"/>
+</p>
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-3.png" width="500" hight="500"/>
+</p>
+
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-4.png" width="500" hight="500"/>
+</p>
+
+**Real World Example**
+
+> A generic example would be you ordering food at a restaurant. You (i.e. `Client`) ask the waiter (i.e. `Invoker`) to bring some food (i.e. `Command`) and waiter simply forwards the request to Chef (i.e. `Receiver`) who has the knowledge of what and how to cook. Another example would be you (i.e. `Client`) switching on (i.e. `Command`) the television (i.e. `Receiver`) using a remote control (`Invoker`).
+
+**UML Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-5.png" width="500" hight="500"/>
+</p>
+
+- **execute():** do the work that the command is supposed to do
+- **unexecute():** do the undoing the command
+- **isReversible():** determines if the the command is reversible, return `true` if the command can be undone
+- **Receiver Class**: deals with the actual work of completing the command
+
+**The benefits of Command Pattern**
+
+- **Manipulate the commands as objects not methods calls**, which enable them add more functionalities like putting commands into queues, adding an undo/redo function.
+- **Decouples the objects of your software**
+
+> For Example see [the source code](https://github.com/aboelkassem/Design-Patterns/tree/main/src/DesignPattern/DesignPattern/Behavioral/CommandPattern)
