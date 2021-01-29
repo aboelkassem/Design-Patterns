@@ -2,6 +2,7 @@
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers;
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers.PaymentHandlers;
 using DesignPatterns.Behavioral.CommandPattern.Commands;
+using DesignPatterns.Behavioral.CommandPattern.Mediator;
 using DesignPatterns.Behavioral.CommandPattern.Repository;
 using DesignPatterns.Behavioral.StatePattern.Context;
 using DesignPatterns.Behavioral.TemplateMethodPattern;
@@ -223,51 +224,70 @@ namespace DesignPattern
             #endregion
 
             #region CommandPattern
-            var shoppingCartRepo = new ShoppingCartRepository();
-            var productsRepo = new ProductsRepository();
+            //var shoppingCartRepo = new ShoppingCartRepository();
+            //var productsRepo = new ProductsRepository();
 
-            var product = productsRepo.FindBy("1");
+            //var product = productsRepo.FindBy("1");
 
-            var addToCartCommand = new AddToCartCommand(shoppingCartRepo, productsRepo, product);
-            var increaseQuantityCommand = new ChangeQuantityCommand(
-                ChangeQuantityCommand.Operation.Increase,
-                shoppingCartRepo,
-                productsRepo,
-                product);
+            //var addToCartCommand = new AddToCartCommand(shoppingCartRepo, productsRepo, product);
+            //var increaseQuantityCommand = new ChangeQuantityCommand(
+            //    ChangeQuantityCommand.Operation.Increase,
+            //    shoppingCartRepo,
+            //    productsRepo,
+            //    product);
 
-            var manager = new CommandManager();
-            manager.Invoke(addToCartCommand);
-            manager.Invoke(increaseQuantityCommand);
-            manager.Invoke(increaseQuantityCommand);
-            manager.Invoke(increaseQuantityCommand);
-            manager.Invoke(increaseQuantityCommand);
+            //var manager = new CommandManager();
+            //manager.Invoke(addToCartCommand);
+            //manager.Invoke(increaseQuantityCommand);
+            //manager.Invoke(increaseQuantityCommand);
+            //manager.Invoke(increaseQuantityCommand);
+            //manager.Invoke(increaseQuantityCommand);
 
-            PrintCart(shoppingCartRepo);
+            //PrintCart(shoppingCartRepo);
 
-            // undoing all shopping products/commands to back to stock
-            manager.Undo();
+            //// undoing all shopping products/commands to back to stock
+            //manager.Undo();
 
-            PrintCart(shoppingCartRepo);
+            //PrintCart(shoppingCartRepo);
 
-            void PrintCart(ShoppingCartRepository repo)
-            {
-                if (repo == null) throw new ArgumentNullException(nameof(repo));
+            //void PrintCart(ShoppingCartRepository repo)
+            //{
+            //    if (repo == null) throw new ArgumentNullException(nameof(repo));
 
-                var p = repo.Get(product.ArticleId);
+            //    var p = repo.Get(product.ArticleId);
 
-                if (p == null)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Your cart is empty");
-                    return;
-                }
+            //    if (p == null)
+            //    {
+            //        Console.WriteLine();
+            //        Console.WriteLine("Your cart is empty");
+            //        return;
+            //    }
 
-                Console.WriteLine("In your cart is the following item: ");
-                Console.WriteLine($"Product name: { p.Name }");
-                Console.WriteLine($"Amount in stock: {p.AmountInStock}");
-                Console.WriteLine($"Quantity in basket: {p.Quantity}");
-            }
+            //    Console.WriteLine("In your cart is the following item: ");
+            //    Console.WriteLine($"Product name: { p.Name }");
+            //    Console.WriteLine($"Amount in stock: {p.AmountInStock}");
+            //    Console.WriteLine($"Quantity in basket: {p.Quantity}");
+            //}
 
+            #endregion
+
+            #region MediatorPattern
+            //var teamChat = new TeamChatroom();
+
+            //var mohamed = new Developer("Mohamed");
+            //var ahmed = new Developer("Ahmed");
+            //var shimaa = new Tester("Shimaa");
+            //var sara = new Tester("Sara");
+
+            //teamChat.RegisterMembers(mohamed, ahmed, shimaa, sara);
+
+            //mohamed.Send("Hey everyone, i'm mohamed, lets get some fun");
+            //Console.WriteLine();
+            //shimaa.Send("Oh, i have found issue while i testing your app");
+            //Console.WriteLine();
+
+            //// developer objects will only receive this message
+            //ahmed.SendTo<Developer>("hey developers, i have bug i cannot fix it, anyone can help?");
             #endregion
         }
     }
