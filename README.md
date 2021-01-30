@@ -466,7 +466,7 @@ public class WebAdapter : IWebRequester
     public int request(object request)
     {
         var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(request);
-        **var resposne = service.request(jsonString);**
+        var resposne = service.request(jsonString);
         if (resposne != null)
             return 200; // OK status code
         return 500; // raise error status code
@@ -489,7 +489,7 @@ public class WebClient
     public void getInfo()
     {
         object obj = new object();
-        **int status = webRequester.request(obj);**
+        int status = webRequester.request(obj);
 
         if (status == 200)
             Console.WriteLine("OK");
@@ -1340,7 +1340,7 @@ The usual way is Sender object call method in Receiver object to run this method
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/command-pattern-1.png" width="300" hight="100"/>
 </p>
 
-The **Sender** creates a **command object**, **Invoker** invokes ****the command object do what it’s supposed to do. The invoker keeps track of the commands, manipulates them and invokes them.
+The **Sender** creates a **command object**, **Invoker** invokes the command object do what it’s supposed to do. The invoker keeps track of the commands, manipulates them and invokes them.
 
 The important thing is that the command pattern lets you **do things to request** that you wouldn't be able to do if they were simple method calls from one object to another.
 
@@ -1567,3 +1567,95 @@ class Program
 ```
 
 See [another example](https://github.com/OlufemiFowosire/PluralsightDesignPatternsPracticeCodes/tree/cf8a3d8eb5809b413c6a7419dc6943f2821902ea/Patterns/Mediator/MediatorDemo/MarkerPositions) for marker positions with WebForms
+
+### Observer pattern
+
+**The observer design pattern** is a pattern where a **subject** keeps a list of **observers**. Observers rely on the subject to inform them of changes to the state of the subject.
+
+Simulate this scenario, imagine you follow a Youtube channel or blog or even Twitter, you visit them multiple times in day, you need to be active and know everything when blog posted, but what if you get bored? A better solution is when a blog posted or video uploaded the youtube or the blog notify you, so just make a subscribe, and when the video updated, the youtube will notify all the subscribers. Or in Twitter when you follow someone you are essentially asking Twitter to send you (**the observer**) tweet updates of the person (**the subject)** you followed. so in this example blog is a **`Subject`** who generates the updates, subscribers is **`Observers`** who is interested in the updates
+
+So **subject** superclass has three methods:
+
+- Allow a new observer to subscribe
+- Allow a current observer to unsubscribe
+- Notify all observers about a new blog post
+
+So **Observer interface** which has methods that an observer can be notified to update itself.
+
+**Real World Example**
+
+> A good example would be the job seekers where they subscribe to some job posting site and they are notified whenever there is a matching job opportunity.
+
+**Sequence Diagram of the example**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/observe-pattern-1.png" width="500" hight="500"/>
+</p>
+
+**Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/observe-pattern-2.png" width="500" hight="500"/>
+</p>
+
+- `Observer` interface
+
+```csharp
+public interface Observer
+{
+    public void update();
+}
+```
+
+- `Subject` Superclass code
+
+```csharp
+public class Subject
+{
+    private List<Observer> Observers = new List<Observer>();
+
+    public void registerObserver(Observer observer)
+    {
+        Observers.Add(observer);
+    }
+    public void unregisterObserver(Observer observer)
+    {
+        Observers.Remove(observer);
+    }
+    public void notify()
+    {
+        foreach (var observer in Observers)
+        {
+            observer.update();
+        }
+    }
+}
+```
+
+- `Blog` class which is subclass from `Subject`
+
+```csharp
+public class Blog : Subject
+{
+    public string State { get; }
+
+		public void setStatus(String status){
+	      this.status = status;
+	      notify();
+		 }
+
+    // other responsibilities
+}
+```
+
+- `Subscriber` class which implement `Observer` class
+
+```csharp
+public class Subscriber : Observer
+{
+    public void update()
+    {
+        // get the blog change or the changed status 
+    }
+}
+```
