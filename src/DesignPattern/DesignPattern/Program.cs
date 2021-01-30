@@ -292,17 +292,17 @@ namespace DesignPattern
             #endregion
 
             #region ObserverPattern
-            //Create a Product with Out Of Stock Status
-            Subject RedMI = new Subject("Red MI Mobile", 10000, "Out Of Stock");
+            ////Create a Product with Out Of Stock Status
+            //Subject RedMI = new Subject("Red MI Mobile", 10000, "Out Of Stock");
 
-            Observer user1 = new Observer("Mohamed", RedMI);
-            Observer user2 = new Observer("Ahmed", RedMI);
-            Observer user3 = new Observer("Ali", RedMI);
+            //Observer user1 = new Observer("Mohamed", RedMI);
+            //Observer user2 = new Observer("Ahmed", RedMI);
+            //Observer user3 = new Observer("Ali", RedMI);
 
-            Console.WriteLine("Red MI Mobile current state : " + RedMI.getState());
-            Console.WriteLine();
-            // Now product is available
-            RedMI.setState("Available");
+            //Console.WriteLine("Red MI Mobile current state : " + RedMI.getState());
+            //Console.WriteLine();
+            //// Now product is available
+            //RedMI.setState("Available");
             #endregion
         }
     }

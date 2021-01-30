@@ -1,3 +1,32 @@
+## Table of Contents
+- [Software Architect and Design Roles in Industry](#software-architect-and-design-roles-in-industry)
+- [Object-Oriented Modeling](#object-oriented-modeling)
+    - [**why should you use objects to represent things in your code?**](#why-should-you-use-objects-to-represent-things-in-your-code)
+- [Design in the Software Process](#design-in-the-software-process)
+    - [Example](#example)
+    - [**Satisfying Qualities**](#satisfying-qualities)
+    - [Class Responsibility Collaborator (CRC)](#class-responsibility-collaborator-crc)
+- [Object-Oriented Modeling](#object-oriented-modeling-1)
+  - [Evolution of Programming Languages](#evolution-of-programming-languages)
+  - [Four Design Principles](#four-design-principles)
+    - [Abstraction](#abstraction)
+    - [Encapsulation](#encapsulation)
+    - [Decomposition](#decomposition)
+    - [Generalization](#generalization)
+  - [Design Principles](#design-principles)
+    - [Evaluating Design Complexity](#evaluating-design-complexity)
+  - [Coupling and Cohesion](#coupling-and-cohesion)
+    - [**Coupling**](#coupling)
+    - [Cohesion](#cohesion)
+    - [**Separation of Concerns**](#separation-of-concerns)
+  - [Information Hiding](#information-hiding)
+    - [Conceptual Integrity](#conceptual-integrity)
+  - [Modelling Behaviour](#modelling-behaviour)
+    - [Inheritance Issues](#inheritance-issues)
+    - [UML Sequence Diagrams](#uml-sequence-diagrams)
+    - [UML State Diagram](#uml-state-diagram)
+    - [Model Checking](#model-checking)
+
 # Software Architect and Design Roles in Industry
 the software designer or a software architect role can look very different from company to company in Characteristics like company size, the scope of the project, the experience of the development team, the organizational structure and the age of the company
 
@@ -523,6 +552,8 @@ class Cat : IAnimal
   <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/OOD/images/class-vs-interface.png" width="400" hight="400"/>
 </p>
 
+## Design Principles 
+
 ### Evaluating Design Complexity
 
 It is important to keep modules simple when you are programming,  If your design complexity which exceeds what developers can mentally handle, then bugs will occur more often.
@@ -743,6 +774,8 @@ You can achieve Conceptual integrity through:
 - Having a **well-defined design or architecture** underlying the software, While software design is  associated with guiding internal design of process running as a single process, Software Architectures describe how software running as multiple processes work together which creates organized software consistency.
 - **Unifying concepts** is taking different concepts and finding a commonality, For example in the Unix OS every resource can be seen and manipulated as file, the same set of operations can be used on different types of resources.
 - Having a **small group** that accepts commits to the code base, which similar to code reviews but restricts the reviews to only members of your software team to ensure the software changes follow the overall architecture and design of the software to solve any design issues and lead to consistency.
+
+## Modelling Behaviour
 
 ### Inheritance Issues
 

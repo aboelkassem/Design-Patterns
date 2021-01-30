@@ -1,3 +1,25 @@
+## Table of Contents
+- [Software Design Patterns](#software-design-patterns)
+- [Types Of Design Patterns](#types-of-design-patterns)
+  - [Creational Patterns](#creational-patterns)
+    - [Singleton Pattern](#singleton-pattern)
+      - [Problem of using Multithreading in Singleton Pattern](#problem-of-using-multithreading-in-singleton-pattern)
+    - [Simple Factory objects](#simple-factory-objects)
+    - [Factory Method Pattern](#factory-method-pattern)
+  - [Structural Patterns](#structural-patterns)
+    - [Facade Pattern](#facade-pattern)
+    - [Adapter Pattern](#adapter-pattern)
+    - [Composite Pattern](#composite-pattern)
+    - [Proxy Pattern](#proxy-pattern)
+    - [Decorator Pattern](#decorator-pattern)
+  - [Behavioral Patterns](#behavioral-patterns)
+    - [Template Method Pattern](#template-method-pattern)
+    - [Chain Of Responsibility Pattern](#chain-of-responsibility-pattern)
+    - [State Pattern](#state-pattern)
+    - [Command Pattern](#command-pattern)
+    - [Mediator Pattern](#mediator-pattern)
+    - [Observer pattern](#observer-pattern)
+  
 ### Suggestions for [Object Oriented Design](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)
 Whenever writing code in an object orientated language, sticking to the following list of suggestions will make your code amenable to changes with the least effort. You can learn Object-Oriented Design and Analysis from this **[Link](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)**
 
