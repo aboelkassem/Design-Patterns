@@ -49,10 +49,10 @@ These are 3 categories used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</
 
 ## Creational Patterns
 Creational design patterns relate to how objects are created or constructed from classes to increase flexibility and reuse of existing code. The creational design pattern come with powerful suggestions on how best to encapsulate the object creation process in a program.
-- Singleton Pattern
+- [Singleton Pattern](#singleton-pattern)
 - Builder Pattern
 - Prototype Pattern
-- Factory Method Pattern
+- [Factory Method Pattern](#factory-method-pattern)
 - Abstract Factory Pattern
 
 ### Singleton Pattern
@@ -304,12 +304,12 @@ public BudgetKnifeStore: KnifeStore {
 
 ## Structural Patterns
 Structural patterns are concerned with the composition or relationships of classes i.e. how the classes are made up or constructed or they help in answering "How to build a software component?", in other words how the entities can use each other.
-- Proxy Pattern
-- Decorator Pattern
-- Adapter Pattern
-- Facade Pattern
+- [Proxy Pattern](#proxy-pattern)
+- [Decorator Pattern](#decorator-pattern)
+- [Adapter Pattern](#adapter-pattern)
+- [Facade Pattern](#facade-pattern)
 - Bridge Pattern
-- Composite Pattern
+- [Composite Pattern](#composite-pattern)
 - Flyweight Pattern
 
 ### Facade Pattern
@@ -977,17 +977,17 @@ class Program
 
 ## Behavioral Patterns
 Behavioral design patterns dictate the interaction and assignment of responsibilities between the objects, Or in other words, they assist in answering "How to run a behavior in software component?"
-- Observer Pattern
+- [Observer pattern](#observer-pattern)
 - Visitor Pattern
 - Strategy Pattern
 - Interpreter Pattern
-- Template Pattern
-- Chain of Responsibility Pattern
-- Command Pattern
+- [Template Method Pattern](#template-method-pattern)
+- [Chain Of Responsibility Pattern](#chain-of-responsibility-pattern)
+- [Command Pattern](#command-pattern)
 - Iterator Pattern
-- Mediator Pattern
+- [Mediator Pattern](#mediator-pattern)
 - Memento Pattern
-- State Pattern
+- [State Pattern](#state-pattern)
 
 ### Template Method Pattern
 
