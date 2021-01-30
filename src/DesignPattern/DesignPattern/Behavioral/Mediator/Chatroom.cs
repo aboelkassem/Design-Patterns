@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DesignPatterns.Behavioral.CommandPattern.Mediator
+namespace DesignPatterns.Behavioral.Mediator
 {
     public abstract class Chatroom
     {

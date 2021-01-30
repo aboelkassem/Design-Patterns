@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Behavioral\CommandPattern\Mediator\" />
+    <Folder Include="Behavioral\Mediator\" />
   </ItemGroup>
 
 </Project>

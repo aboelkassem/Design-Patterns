@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DesignPatterns.Behavioral.CommandPattern.Mediator
+namespace DesignPatterns.Behavioral.Mediator
 {
     public class TeamChatroom : Chatroom
     {

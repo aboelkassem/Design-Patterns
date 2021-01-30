@@ -2,7 +2,7 @@
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers;
 using DesignPatterns.Behavioral.ChainOfResponsibilityPattern.SeparationExample.PaymentReceivers.PaymentHandlers;
 using DesignPatterns.Behavioral.CommandPattern.Commands;
-using DesignPatterns.Behavioral.CommandPattern.Mediator;
+using DesignPatterns.Behavioral.Mediator;
 using DesignPatterns.Behavioral.CommandPattern.Repository;
 using DesignPatterns.Behavioral.StatePattern.Context;
 using DesignPatterns.Behavioral.TemplateMethodPattern;
@@ -20,6 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DesignPatterns.Behavioral.Observer;
 
 namespace DesignPattern
 {
@@ -288,6 +289,20 @@ namespace DesignPattern
 
             //// developer objects will only receive this message
             //ahmed.SendTo<Developer>("hey developers, i have bug i cannot fix it, anyone can help?");
+            #endregion
+
+            #region ObserverPattern
+            //Create a Product with Out Of Stock Status
+            Subject RedMI = new Subject("Red MI Mobile", 10000, "Out Of Stock");
+
+            Observer user1 = new Observer("Mohamed", RedMI);
+            Observer user2 = new Observer("Ahmed", RedMI);
+            Observer user3 = new Observer("Ali", RedMI);
+
+            Console.WriteLine("Red MI Mobile current state : " + RedMI.getState());
+            Console.WriteLine();
+            // Now product is available
+            RedMI.setState("Available");
             #endregion
         }
     }
