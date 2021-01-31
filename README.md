@@ -19,6 +19,7 @@
     - [Command Pattern](#command-pattern)
     - [Mediator Pattern](#mediator-pattern)
     - [Observer pattern](#observer-pattern)
+  - [MVC Pattern](#mvc-pattern)
   
 ### Suggestions for [Object Oriented Design](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)
 Whenever writing code in an object orientated language, sticking to the following list of suggestions will make your code amenable to changes with the least effort. You can learn Object-Oriented Design and Analysis from this **[Link](https://github.com/aboelkassem/Design-Patterns/tree/main/OOD)**
@@ -43,9 +44,9 @@ You choose your **pattern** based on the **problem space**
 
 # Types Of Design Patterns
 These are 3 categories used by <a href="https://en.wikipedia.org/wiki/GOF">GoF</a> in their seminal work on design patterns
-- Creational Patterns
-- Structural Patterns
-- Behavioral Patterns
+- [Creational Patterns](#creational-patterns)
+- [Structural Patterns](#structural-patterns)
+- [Behavioral Patterns](#behavioral-patterns)
 
 ## Creational Patterns
 Creational design patterns relate to how objects are created or constructed from classes to increase flexibility and reuse of existing code. The creational design pattern come with powerful suggestions on how best to encapsulate the object creation process in a program.
@@ -1681,3 +1682,21 @@ public class Subscriber : Observer
     }
 }
 ```
+
+## MVC Pattern
+
+**Model, View, Controller (MVC)** patterns are a pattern that should be consider for use with **user interfaces**. MVC patterns divides the responsibilities into three parts: Model, View, Controller.
+
+This pattern uses the **Separation of Concerns** design principle which allows your program to be modular and loosely coupled. Separating these will allow you to focus on each set of responsibilities separately.
+
+**UML Class Diagram**
+
+<p align="center" width="100%">
+  <img src="https://github.com/aboelkassem/Design-Patterns/blob/main/Images/MVC.png" width="500" hight="500"/>
+</p>
+
+- **The Model:** contains the data and logic that users want to manipulate.⇒ like **Backend**
+- **The View:** give a user a way to see the data of model or parts of it ⇒ like **Frontend**
+- **The Controller:** responsible for handling requests from **view** and changing the **model**
+
+In general, **Model** corresponds the entity objects, **View** corresponds interfaces to deal with users (Boundary object), Controller corresponds with receives events (Control object). **Model** can exist on its own with no views or controllers.
